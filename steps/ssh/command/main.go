@@ -7,6 +7,10 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/secretsmanager"
+
 	envconf "github.com/caarlos0/env/v6"
 	sdkExec "github.com/stackpulse/steps-sdk-go/exec"
 	"github.com/stackpulse/steps-sdk-go/step"
@@ -16,6 +20,8 @@ type Args struct {
 	Username              string        `env:"USERNAME,required" envDefault:""`
 	Hostname              string        `env:"HOSTNAME,required" envDefault:""`
 	Command               string        `env:"COMMAND,required" envDefault:""`
+	AWSSecretKey          string        `env:"AWS_SECRET_KEY" envDefault:""`
+	AWSRegion             string        `env:"AWS_REGION" envDefault:""`
 	PrivateKey            string        `env:"PRIVATE_KEY" envDefault:""`
 	Password              string        `env:"PASSWORD" envDefault:""`
 	StrictHostKeyChecking string        `env:"STRICT_HOST_KEY_CHECKING" envDefault:"no"`
@@ -38,14 +44,34 @@ type SSHCommand struct {
 	args Args
 }
 
+func (s *SSHCommand) fetchAwsSecret(secretKey, region string) (string, error) {
+	secretsService := secretsmanager.New(session.New(), aws.NewConfig().WithRegion(region))
+	if secretsService == nil {
+		return "", fmt.Errorf("initialize AWS secrets manager")
+	}
+
+	result, err := secretsService.GetSecretValue(&secretsmanager.GetSecretValueInput{
+		SecretId:     &secretKey,
+		VersionStage: aws.String("AWSCURRENT"),
+	})
+	if err != nil || result.SecretString == nil {
+		return "", fmt.Errorf("fetch aws secret: %w", err)
+	}
+
+	return *result.SecretString, nil
+}
+
 func (s *SSHCommand) Init() error {
 	err := envconf.Parse(&s.args)
 	if err != nil {
 		return err
 	}
 
-	if s.args.PrivateKey == "" && s.args.Password == "" {
-		return fmt.Errorf("private key or password is required")
+	if s.args.AWSSecretKey == "" && s.args.PrivateKey == "" && s.args.Password == "" {
+		return fmt.Errorf("private key, aws secret, or password is required")
+	}
+	if s.args.AWSSecretKey != "" && s.args.AWSRegion == "" {
+		return fmt.Errorf("aws region is required when specifing aws secret")
 	}
 
 	return nil
@@ -66,27 +92,43 @@ func (s *SSHCommand) marshalOutput(output string) []byte {
 	return outputJSON
 }
 
+func (s *SSHCommand) buildCommand() (string, []string, error) {
+	if s.args.Password != "" {
+		sshCmd, sshArgs := s.buildPasswordCommand(s.args.Username, s.args.Hostname, s.args.Command, s.args.StrictHostKeyChecking, s.args.LogLevel, s.args.Port, s.args.ConnectionTimeout, s.args.Password)
+		return sshCmd, sshArgs, nil
+	}
+	privateKey := s.args.PrivateKey
+	if s.args.AWSSecretKey != "" {
+		var err error
+		privateKey, err = s.fetchAwsSecret(s.args.AWSSecretKey, s.args.AWSRegion)
+		if err != nil {
+			return "", nil, fmt.Errorf("fetchAwsSecret: %w", err)
+		}
+	}
+
+	err := ioutil.WriteFile(PrivateKeyPath, []byte(privateKey), 0644)
+	if err != nil {
+		return "", nil, fmt.Errorf("write private key: %w", err)
+	}
+
+	// Restrict key.pem file capabilities (for ssh usage)
+	output, _, err := sdkExec.Execute("chmod", []string{"600", PrivateKeyPath})
+	if err != nil {
+		return "", nil, fmt.Errorf("chmod private key: %w: %s", err, output)
+	}
+
+	sshCmd, sshArgs := s.buildPrivateKeyCommand(s.args.Username, s.args.Hostname, s.args.Command, s.args.StrictHostKeyChecking, s.args.LogLevel, s.args.Port, s.args.ConnectionTimeout)
+	return sshCmd, sshArgs, nil
+}
+
 func (s *SSHCommand) Run() (int, []byte, error) {
 	var sshCmd string
 	var sshArgs []string
-	if s.args.PrivateKey != "" {
-		err := ioutil.WriteFile(PrivateKeyPath, []byte(s.args.PrivateKey), 0644)
-		if err != nil {
-			return step.ExitCodeFailure, s.marshalOutput(""), fmt.Errorf("write private key: %w", err)
-		}
 
-		// Restrict key.pem file capabilities (for ssh usage)
-		output, exitCode, err := sdkExec.Execute("chmod", []string{"600", PrivateKeyPath})
-		if err != nil {
-			return exitCode, s.marshalOutput(""), fmt.Errorf("chmod private key: %w: %s", err, output)
-		}
-
-		sshCmd, sshArgs = s.buildPrivateKeyCommand(s.args.Username, s.args.Hostname, s.args.Command, s.args.StrictHostKeyChecking, s.args.LogLevel, s.args.Port, s.args.ConnectionTimeout)
-
-	} else {
-		sshCmd, sshArgs = s.buildPasswordCommand(s.args.Username, s.args.Hostname, s.args.Command, s.args.StrictHostKeyChecking, s.args.LogLevel, s.args.Port, s.args.ConnectionTimeout, s.args.Password)
+	sshCmd, sshArgs, err := s.buildCommand()
+	if err != nil {
+		return step.ExitCodeFailure, s.marshalOutput(""), fmt.Errorf("buildCommand: %w", err)
 	}
-
 	output, exitCode, err := sdkExec.Execute(sshCmd, sshArgs)
 	s.PrintLog()
 	fmt.Println("--OUTPUT--")
@@ -94,7 +136,6 @@ func (s *SSHCommand) Run() (int, []byte, error) {
 	fmt.Println("----------")
 
 	marshaledOuptut := s.marshalOutput(string(output))
-
 	if err != nil {
 		return exitCode, marshaledOuptut, fmt.Errorf("execute ssh: %w", err)
 	}
