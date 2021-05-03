@@ -40,7 +40,6 @@ envs:
   - name: REPORTER_EMAIL
     description: "Email address of the user that is reporting the issue."
     type: "string"
-    required: true
     example: "myemail@mycompany.io"
   - name: ASSIGNEE_EMAIL
     description: "Email address of the user that will be assigned to the issue."
