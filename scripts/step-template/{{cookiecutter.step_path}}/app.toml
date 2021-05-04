@@ -1,0 +1,3 @@
+
+name = "{{cookiecutter.step_relpath}}"
+includes = ["{{ '{{' }} .root {{ '}}' }}/baur-includes/step.toml#build-step"]
