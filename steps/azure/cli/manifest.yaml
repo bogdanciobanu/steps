@@ -3,7 +3,6 @@ kind: Step
 metadata:
   version: 1.0.0
   name: "azure_cli_command"
-  imageName: "microsoft/azure-cli"
   description: "Run commands on Azure environment using azure cli"
   vendor: azure
   type: advanced

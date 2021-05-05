@@ -1,12 +1,11 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
-  version: 2.1.32
+  version: 1.0.0
   name: "aws_attach_volume"
-  imageName: "amazon/aws-cli"
   description: "Attach AWS volume to AWS instance."
   vendor: aws
-  type: remediation 
+  type: remediation
 
 args:
   - name: command

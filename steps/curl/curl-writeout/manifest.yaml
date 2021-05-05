@@ -1,9 +1,8 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
-  version: 7.75.0
+  version: 1.0.0
   name: "curl_writeout"
-  imageName: "curlimages/curl"
   description: "Get analytics metadata of HTTP(S) request with cURL"
   vendor: curl
   type: hydration
