@@ -45,7 +45,7 @@ envs:
     required: false
     example: "2m"
   - name: RESPONSES
-    description: "A list of possible options the user can select and will be returned in the step output as raw string. Can be either comma-seperated list or JSON array. Maximum number of responses is 100"
+    description: "A list of possible options the user can select and will be returned in the step output as raw string. Can be either comma-seperated list or JSON array. Maximum number of responses is 10000"
     type: string
     required: false
     example: "Yes,No"
