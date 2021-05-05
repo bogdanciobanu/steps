@@ -26,11 +26,11 @@ outputs:
     example: "Cloudflare"
   - name: noise
     description: "If true, this IP has been observed scanning the internet in the last 90 days."
-    type: "boolean"
+    type: "bool"
     example: "true"
   - name: riot
     description: "If true, this IP was found in the RIOT project dataset."
-    type: "boolean"
+    type: "bool"
     example: "true"
   - name: classification
     description: "The GreyNoise classification for this IP."
