@@ -1,4 +1,4 @@
-module github.com/stackpulse/steps/steps/virustotal/get-ip
+module github.com/stackpulse/steps/steps/virustotal/get-domain
 
 go 1.14
 

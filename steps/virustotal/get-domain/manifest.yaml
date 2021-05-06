@@ -2,8 +2,8 @@ apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
   version: 1.0.0
-  name: "virustotal_get_url"
-  description: "Analyse a URL."
+  name: "virustotal_get_domain"
+  description: "Analyse a Domain."
   vendor: virustotal
   type: triage
 
@@ -12,13 +12,17 @@ envs:
     description: "Your VirusTotal API key."
     type: "string"
     required: true
-  - name: URL
-    description: "URL to be analyzed."
+  - name: DOMAIN
+    description: "DOMAIN to be analyzed."
     type: "string"
     required: true
-    example: "http://www.somedomain.com/this/is/my/url"
+    example: "http://www.somedomain.com/this/is/my/domain"
 
 outputs:
+  - name: reputation
+    description: "The reputation score for the domain in question."
+    type: "int"
+    example: 13
   - name: stats
     description: "Results summary of engines tests by category."
     type: "json"

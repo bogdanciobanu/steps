@@ -24,6 +24,6 @@ envs:
 
 outputs:
   - name: result
-    description: "The result of the action. Either: `success`, `invalid user id`, 'invalid user state'."
+    description: "The result of the action. Either: `success` or `invalid user id`"
     type: "string"
     example: "invalid user id"

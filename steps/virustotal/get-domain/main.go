@@ -9,16 +9,14 @@ import (
 	vt "github.com/VirusTotal/vt-go"
 )
 
-type VirustotalGetIp struct {
+type VirustotalGetUrl struct {
 	VtApiKey string `env:"VT_API_KEY,required"`
-	Ip       string `env:"IP,required"`
+	Domain   string `env:"DOMAIN,required"`
 }
 
 type stepOutput struct {
-	AsOwner           string      `json:"as_owner"`
-	Country           string      `json:"country"`
-	Reputation        int         `json:"reputation"`
-	LastAnalysisStats statsOutput `json:"last_analysis_stats"`
+	Reputation int         `json:"reputation"`
+	Stats      statsOutput `json:"stats"`
 	step.Outputs
 }
 
@@ -34,12 +32,11 @@ type apiResponse struct {
 	Attributes struct {
 		LastAnalysisStats statsOutput `json:"last_analysis_stats"`
 		AsOwner           string      `json:"as_owner"`
-		Country           string      `json:"country"`
 		Reputation        int         `json:"reputation"`
 	} `json:"attributes"`
 }
 
-func (s *VirustotalGetIp) Init() error {
+func (s *VirustotalGetUrl) Init() error {
 	err := env.Parse(s)
 	if err != nil {
 		return err
@@ -48,12 +45,12 @@ func (s *VirustotalGetIp) Init() error {
 	return nil
 }
 
-func (s *VirustotalGetIp) Run() (exitCode int, output []byte, err error) {
+func (s *VirustotalGetUrl) Run() (exitCode int, output []byte, err error) {
 	//prepare client
 	client := vt.NewClient(s.VtApiKey)
 
 	//send request
-	rawResp, err := client.Get(vt.URL("ip_addresses/%s", s.Ip))
+	rawResp, err := client.Get(vt.URL("domains/%s", s.Domain))
 	if err != nil {
 		//err is present if invalid JSON or non 2xx status code
 		return step.ExitCodeFailure, nil, err
@@ -80,11 +77,9 @@ func (s *VirustotalGetIp) Run() (exitCode int, output []byte, err error) {
 
 	//prepare output
 	out := stepOutput{
-		AsOwner:           resp.Attributes.AsOwner,
-		Country:           resp.Attributes.Country,
-		Reputation:        resp.Attributes.Reputation,
-		LastAnalysisStats: resp.Attributes.LastAnalysisStats,
-		Outputs:           step.Outputs{Object: fullResp},
+		Reputation: resp.Attributes.Reputation,
+		Stats:      resp.Attributes.LastAnalysisStats,
+		Outputs:    step.Outputs{Object: fullResp},
 	}
 	outputBytes, err := json.Marshal(out)
 	if err != nil {
@@ -96,5 +91,5 @@ func (s *VirustotalGetIp) Run() (exitCode int, output []byte, err error) {
 }
 
 func main() {
-	step.Run(&VirustotalGetIp{})
+	step.Run(&VirustotalGetUrl{})
 }
