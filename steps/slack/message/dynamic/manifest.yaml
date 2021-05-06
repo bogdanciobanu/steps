@@ -36,6 +36,10 @@ envs:
     description: "Image type of the image file. Ignored if IMAGE_LINK is empty."
     type: string
     example: "jpg"
+  - name: INITIAL_COMMENT
+    description: "The message header introducing the message text"
+    type: string
+    example: "StackPulse Message"
 
 outputs:
   - name: message_recipient

@@ -1,4 +1,4 @@
-module github.com/stackpulse/steps/ssh/command
+module github.com/stackpulse/steps/ssh/base
 
 go 1.14
 
@@ -7,7 +7,3 @@ require (
 	github.com/caarlos0/env/v6 v6.5.0
 	github.com/stackpulse/steps-sdk-go v0.0.0-20210314133745-61086c27983f
 )
-
-require github.com/stackpulse/steps/ssh/base v0.0.0
-
-replace github.com/stackpulse/steps/ssh/base v0.0.0 => ../base
