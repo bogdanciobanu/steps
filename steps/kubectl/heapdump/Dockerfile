@@ -5,7 +5,7 @@ ARG CURRENT_BRANCH
 ARG STEP_BASEPATH
 
 # 1. Base
-FROM us-docker.pkg.dev/stackpulse/public/kubectl/base:latest AS base
+FROM us-docker.pkg.dev/stackpulse/public/kubectl/base:1.0.0 AS base
 
 # 2. Builder
 FROM golang:1.16-alpine as builder

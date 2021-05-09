@@ -1,4 +1,4 @@
-FROM us-docker.pkg.dev/stackpulse/public/parsers/base
+FROM us-docker.pkg.dev/stackpulse/public/parsers/base:1.0.0
 
 RUN apk add --no-cache unzip curl wget
 
