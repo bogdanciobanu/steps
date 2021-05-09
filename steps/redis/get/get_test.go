@@ -4,17 +4,18 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/orlangure/gnomock"
-	"github.com/orlangure/gnomock/preset/redis"
-	"github.com/stackpulse/steps-sdk-go/env"
-	"github.com/stretchr/testify/assert"
-	"github.com/testcontainers/testcontainers-go"
 	"io/ioutil"
 	"runtime"
 	"strconv"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/orlangure/gnomock"
+	"github.com/orlangure/gnomock/preset/redis"
+	"github.com/stackpulse/steps-sdk-go/env"
+	"github.com/stretchr/testify/assert"
+	testcontainers "github.com/testcontainers/testcontainers-go"
 )
 
 func ExecuteStep(envs map[string]string, stepImagePath string) (string, error) {
@@ -46,6 +47,7 @@ func ExecuteStep(envs map[string]string, stepImagePath string) (string, error) {
 		return "", err
 	}
 
+	defer stepC.Terminate(context.Background())
 	return string(b), nil
 }
 
@@ -103,16 +105,18 @@ func SetupRedis(t *testing.T) ServiceUrls {
 	return NewServiceUrls("redis://", container.Host, strconv.Itoa(container.DefaultPort()))
 }
 
-func TestStep(t *testing.T) {
+type SingleTest struct {
+	name           string
+	envs           map[string]string
+	shouldError    bool
+	errorContains  string
+	expectedOutput string
+}
+
+func TestRedisGet_Run(t *testing.T) {
 	serviceUrls := SetupRedis(t)
 
-	tests := []struct {
-		name           string
-		envs           map[string]string
-		shouldError    bool
-		errorContains  string
-		expectedOutput string
-	}{
+	var cases = []*SingleTest {
 		{
 			"no params",
 			map[string]string{},
@@ -157,24 +161,30 @@ func TestStep(t *testing.T) {
 		},
 	}
 
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			stepOutput, err := ExecuteStep(test.envs, "us-docker.pkg.dev/stackpulse/public/steps/redis/get")
-			if err != nil {
-				assert.Fail(t, "failed to execute the step: %w", err)
-			}
-
-			if test.shouldError {
-				assert.Contains(t, stepOutput, test.errorContains)
-
-			} else {
-				parsedStepOutput, err := ParseStepOutput(stepOutput)
-				if err != nil {
-					assert.Fail(t, "failed to parse step output: %w", err)
-				}
-
-				assert.Equal(t, test.expectedOutput, parsedStepOutput["output"])
-			}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			testStep(t, tc, "us-docker.pkg.dev/stackpulse/public/redis/get")
 		})
+	}
+}
+
+func testStep(t *testing.T, test *SingleTest, imagePath string) {
+
+	stepOutput, err := ExecuteStep(test.envs, imagePath)
+	if err != nil {
+		assert.Fail(t, "failed to execute the step: %w", err)
+	}
+
+	if test.shouldError {
+		assert.Contains(t, stepOutput, test.errorContains)
+
+	} else {
+		parsedStepOutput, err := ParseStepOutput(stepOutput)
+		if err != nil {
+			assert.Fail(t, "failed to parse step output: %w", err)
+		}
+
+		assert.Equal(t, test.expectedOutput, parsedStepOutput["output"])
 	}
 }

@@ -103,4 +103,3 @@ func (n *GetPods) ParseObject(output []byte) (*Pods, error) {
 
 	return ret, nil
 }
-
