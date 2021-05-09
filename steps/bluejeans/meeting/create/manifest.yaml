@@ -1,0 +1,41 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  name: "bluejeans_create_meeting"
+  description: "Create a new BlueJeans meeting. User must provide username and password or client id and secret (see https://primetime.bluejeans.com/apidocs/overview.html#client_secret_generation)."
+  vendor: bluejeans
+  type: notification
+
+envs:
+  - name: USERNAME
+    type: string
+    description: "Username for authentication."
+  - name: PASSWORD
+    type: string
+    description: "Passowrd for authentication."
+  - name: CLIENT_ID
+    type: string
+    description: "ClientID for authentication. Provisioned within the BlueJeans Enterprise Administration console. A BlueJeans administrator must generate these parameters and provide them."
+  - name: CLIENT_SECRET
+    type: string
+    description: "Client Secret for authentication. Provisioned within the BlueJeans Enterprise Administration console. A BlueJeans administrator must generate these parameters and provide them."
+  - name: TITLE
+    type: string
+    description: "Meeting Title."
+    example: "Noc Team Alert Meeting"
+  - name: SEND_EMAIL
+    type: bool
+    default: false
+    description: "Send email reminder for the meeting."
+  - name: INVITEES
+    type: string
+    description: "Comma seperated list of emails to invite."
+    example: "john.doe@example.com,jane.doe@example.com"
+
+outputs:
+  - name: api_response
+    description: "Blue Jeans create meeting api response"
+    type: json
+  - name: meeting_url
+    description: "Link to meeting."
+    type: string
