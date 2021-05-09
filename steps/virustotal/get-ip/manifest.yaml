@@ -29,7 +29,7 @@ outputs:
     example: "DE"
   - name: reputation
     description: "IP score calculated from the votes of the VirusTotal's community."
-    type: "integer"
+    type: "int"
     example: "0"
   - name: last_analysis_stats
     description: "Number of different results from this scans."
