@@ -16,10 +16,10 @@ func main() {
 		panic(err)
 	}
 	buf := make([]byte, 1024)
-	_, err = conn.Read(buf)
+	n, err := conn.Read(buf)
 	if err != nil {
 		panic(err)
 	}
 	conn.Close()
-	os.Stdout.Write(buf)
+	os.Stdout.Write(buf[:n])
 }
