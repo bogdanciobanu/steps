@@ -14,7 +14,7 @@ envs:
     required: true
     example: "8.8.8.8"
   - name: GN_API_KEY
-    description: "Your GreyNoise API key for using the GreyNoise enterprise API. If not provided the community API will be used."
+    description: "Your GreyNoise API key for using the GreyNoise community API. If not provided you might experience rate limiting from the API."
     type: "string"
     required: false
 
