@@ -1,11 +1,11 @@
 # Globals
 ARG BASEDIR=/go/src/github.com/stackpulse
-ARG BINARY_NAME=logs
-ARG CURRENT_BRANCH
+ARG BINARY_NAME=grafana-get-panel
+ARG BASE_BRANCH
 ARG STEP_BASEPATH
 
 # 1. Base
-FROM us-docker.pkg.dev/stackpulse/public/kubectl/base:1.0.0 AS base
+FROM us-docker.pkg.dev/stackpulse/public/base:$BASE_BRANCH AS base
 
 # 2. Builder
 FROM golang:1.14-alpine as builder
@@ -28,4 +28,4 @@ RUN chmod +x ${BINARY_NAME}
 COPY --from=base /usr/local/bin/ /usr/local/bin/
 
 ENV STEP_NAME=${BINARY_NAME}
-ENTRYPOINT ["/bin/sh", "-c", "set -eo pipefail; /${STEP_NAME} 2>&1 | sp-base-step format"]
+ENTRYPOINT /${STEP_NAME}

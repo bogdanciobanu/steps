@@ -1,5 +1,4 @@
-ARG BASE_BRANCH
 ARG STEP_BASEPATH
 
-FROM us-docker.pkg.dev/stackpulse/public/envoy/base:$BASE_BRANCH
+FROM us-docker.pkg.dev/stackpulse/public/envoy/base:1.0.0
 ENV ENDPOINT="/stats?format=json"

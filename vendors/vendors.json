@@ -166,5 +166,9 @@
     {
         "vendor_type": "greynoise",
         "icon": "greynoise.svg"
+    },
+    {
+        "vendor_type": "grafana",
+        "icon": "grafana.svg"
     }
 ]
