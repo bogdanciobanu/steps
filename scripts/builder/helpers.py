@@ -6,6 +6,7 @@ import logging
 import sys
 
 
+
 # Will initialize logger for given step.
 # If env var LOG_OUPUT_DIR is set it will also store log files to that directory
 def init_logger(step_name=None):
@@ -26,16 +27,19 @@ def init_logger(step_name=None):
 def run_command(args):
     cmdline = " ".join(args)
     logging.info(f"> Running: {cmdline}")
+    output = None
+    result = False
     try:
-        output = subprocess.check_output(args)
-    except:
-        logging.error(str(output, 'utf-8'))
+        output = subprocess.check_output(args, stderr=subprocess.STDOUT)
+    except Exception as e:
+        output = e.output
         logging.exception("Failed running command")
-        return False
+    else:
+        result = True
 
-    if len(output) != 0:
+    if output and len(output) != 0:
         logging.info(str(output, 'utf-8'))
-    return True
+    return result
 
 
 # Get current branch using git cli tool
