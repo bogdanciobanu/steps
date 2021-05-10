@@ -37,4 +37,4 @@ outputs:
     example: '---\napiVersion\: stackpulse.io/v1\nkind\: Step\nmetadata\:\n  name\: github_get_file\n  description\: Query GitHub to retrieve a specified file.\n'
 
 integrations:
-  - github
+  - github_token

@@ -55,4 +55,4 @@ outputs:
     example: "OPEN"
 
 integrations:
-  - github
+  - github_token

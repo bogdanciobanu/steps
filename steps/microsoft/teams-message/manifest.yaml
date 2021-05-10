@@ -31,4 +31,4 @@ envs:
   - name: TEAMS_TABLE_DATA
     description: "JSON containing a set of Key/Value pairs to be displayed at the bottom of the message"
     type: "string"
-    required: false  
+    required: false

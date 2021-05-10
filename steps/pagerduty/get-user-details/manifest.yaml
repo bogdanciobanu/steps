@@ -1,4 +1,3 @@
-
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
@@ -20,3 +19,6 @@ outputs:
     description: "Json output contains the user details"
     type: "json"
     example: '{"Email":"email@gmail.com","Timezone":"UTC","Role":"user", "JobTitle": "SRE"}'
+
+integrations:
+  - pagerduty_token

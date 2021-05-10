@@ -48,3 +48,6 @@ outputs:
   - name: succeeded
     description: "Whether the build succeeded or not. Will be omitted if SHOULD_WAIT wasn't specified."
     type: "bool"
+
+integrations:
+  - jenkins

@@ -17,3 +17,6 @@ outputs:
   - name: output
     description: "The Gcloud CLI command result. The format depends on the specific command."
     type: string
+
+integrations:
+  - gcp

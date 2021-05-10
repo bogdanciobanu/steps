@@ -73,3 +73,6 @@ outputs:
     description: "Number of the pull request in said repository."
     type: int
     example: 1
+
+integrations:
+  - github_token

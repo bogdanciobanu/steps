@@ -44,3 +44,6 @@ outputs:
     description: "Whether or not the command was successful."
     type: bool
     example: true
+
+integrations:
+  - github_token

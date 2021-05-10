@@ -33,3 +33,6 @@ outputs:
     type: "json"
     example: |
       [{"Name":"21.02.0","Message":"CHANGELOG:\ne751dc6 remove redundant code (#52)\n\n 53fe46f fixed bugs in new flow (#51)\n"},{"Name":"21.01.7","Message":"CHANGELOG:\n53fe46f fixed bugs in new flow (#51)\n\n 57ea5ce saas license agreement added to eula (#50)\n"}]
+
+  integrations:
+    - github_token

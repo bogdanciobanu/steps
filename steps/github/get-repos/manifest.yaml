@@ -28,3 +28,5 @@ outputs:
     type: "json"
     example: '["service-1","service-2"]'
 
+integrations:
+  - github_token
