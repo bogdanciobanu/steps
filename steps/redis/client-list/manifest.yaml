@@ -35,7 +35,7 @@ envs:
     type: "string"
     example: "age"
   - name: ORDER_DESC
-    description: "Wheter sorting is in descending order, if ORDER_BY is specified."
+    description: "Whether sorting is in descending order, if ORDER_BY is specified."
     type: "bool"
     default: "false"
     example: "true"

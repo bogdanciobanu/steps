@@ -52,13 +52,13 @@ func SetupRedis(t *testing.T) ServiceUrls {
 	return NewServiceUrls("redis://", redisContainer.Host, strconv.Itoa(redisContainer.DefaultPort()))
 }
 
-func TestRedisGet_Run(t *testing.T) {
+func TestRedisListClientList_Run(t *testing.T) {
 	serviceUrls := SetupRedis(t)
 
 	cases := []container.TestCase{
 		{
 			Name:			"no params",
-			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
+			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
 			Envs:			map[string]string{},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
@@ -67,7 +67,7 @@ func TestRedisGet_Run(t *testing.T) {
 		},
 		{
 			Name:			"failed to connect redis - invalid dns",
-			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
+			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
 			Envs:			map[string]string{"KEY": "mykey", "REDIS_URL": "redis://invalid-hostname"},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
@@ -76,7 +76,7 @@ func TestRedisGet_Run(t *testing.T) {
 		},
 		{
 			Name:			"failed to connect redis - invalid ip",
-			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
+			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
 			Envs:			map[string]string{"KEY": "mykey", "REDIS_URL": "redis://127.0.0.2"},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
@@ -84,31 +84,22 @@ func TestRedisGet_Run(t *testing.T) {
 			WantOutput:		"",
 		},
 		{
-			Name:			"key not found",
-			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
-			Envs:			map[string]string{"KEY": "not-exist", "REDIS_URL": serviceUrls.FullUrl},
+			Name:			"negative limit",
+			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
+			Envs:			map[string]string{"LIMIT": "-1", "REDIS_URL": serviceUrls.FullUrl},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
-			WantError:		"key not found",
+			WantError:		"LIMIT cannot be a negative number",
 			WantOutput:		"",
 		},
 		{
-			Name:			"numerical key - found",
-			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
-			Envs:			map[string]string{"KEY": "number", "REDIS_URL": serviceUrls.FullUrl},
+			Name:			"list one client",
+			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
+			Envs:			map[string]string{"REDIS_URL": serviceUrls.FullUrl},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeOK,
 			WantError:		"",
-			WantOutput:		"42",
-		},
-		{
-			Name:			"numerical key - string",
-			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
-			Envs:			map[string]string{"KEY": "string", "REDIS_URL": serviceUrls.FullUrl},
-			Args: 			[]string{},
-			WantExitCode: 	step.ExitCodeOK,
-			WantError:		"",
-			WantOutput:		"foo",
+			WantOutput:		"",
 		},
 	}
 
