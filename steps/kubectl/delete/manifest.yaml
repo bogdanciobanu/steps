@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "kubectl_delete"
   description: "Delete a Kubernetes object"
   vendor: kubernetes
@@ -62,6 +63,11 @@ envs:
     description: "Amount of seconds to wait before giving up on a delete, zero means determine a timeout from the size of the object. Default 0"
     type: "int"
     example: "2"
+  - name: FORCE
+    description: "If true, immediately remove resources and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation."
+    type: "bool"
+    example: false
+    default: false
 
 integrations:
   - k8s
@@ -71,4 +77,3 @@ outputs:
     description: "Whether the resource deleted"
     type: "bool"
     example: "true"
-

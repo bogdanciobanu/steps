@@ -20,6 +20,10 @@ commands:
 # Define the jobs we want to run for this project
 jobs:
   build:
+    parameters:
+      build-log-path:
+        type: string
+        default: /home/circleci/build-log
     resource_class: large
     docker:
       - image: gcr.io/stackpulse/circleci-steps-builder:1.16
@@ -28,6 +32,7 @@ jobs:
           password: $GCLOUD_SERVICE_KEY
     environment:
       FORCE_REBUILD: << pipeline.parameters.force-rebuild >>
+      LOG_OUTPUT_DIR: << parameters.build-log-path >>
     steps:
       - setup_remote_docker
       - checkout
@@ -42,8 +47,13 @@ jobs:
           command: |
             count=0
             until pg_isready -d $BAUR_POSTGRESQL_URL || (( count++ >= 8 )); do sleep 1; done
-      - run: |
-          make all
+      - run:
+          name: Build steps
+          command: |
+            mkdir -p $LOG_OUTPUT_DIR
+            make all
+      - store_artifacts:
+          path: << parameters.build-log-path >>
 
   build-manifests:
     machine:

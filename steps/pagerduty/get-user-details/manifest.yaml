@@ -1,0 +1,22 @@
+
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  name: "pagerduty_get_user_details"
+  description: "Fetch user details by user id from Pagerduty User API."
+  vendor: pagerduty
+  type: hydration
+  version: "1.0.0"
+
+envs:
+  - name: USER_ID
+    description: "Pagerduty user ID."
+    type: string
+    required: true
+    example: "PEAS00ABC"
+
+outputs:
+  - name: output
+    description: "Json output contains the user details"
+    type: "json"
+    example: '{"Email":"email@gmail.com","Timezone":"UTC","Role":"user", "JobTitle": "SRE"}'

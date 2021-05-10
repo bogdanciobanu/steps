@@ -52,7 +52,7 @@ func decodeAndWrite(base64Encoded, destination string) error {
 
 func (n *ApplyFile) Run() (output []byte, exitCode int, err error) {
 	if n.Args.ApplyContent != "" {
-		decodeAndWrite(n.Args.ApplyContent, "/tmp/data")
+		err = decodeAndWrite(n.Args.ApplyContent, "/tmp/data")
 		if err != nil {
 			fmt.Printf("errr! %s\n", err.Error())
 		}

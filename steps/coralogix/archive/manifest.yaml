@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "coralogix_archive"
   description: "Perform a query on your Coralogix logs that are archived on a S3 bucket without needing to reindex the data."
   vendor: coralogix

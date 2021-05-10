@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "teams_send_message"
   description: "Send a message to Microsoft Teams"
   vendor: teams

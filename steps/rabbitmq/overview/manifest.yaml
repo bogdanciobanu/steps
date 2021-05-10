@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "rabbitmq_overview"
   description: "Get overview information about RabbitMQ cluster"
   vendor: rabbitmq

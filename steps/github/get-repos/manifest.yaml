@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "github_get_repositories"
   description: "Query GitHub to retrieve repositories names."
   vendor: github

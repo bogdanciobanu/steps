@@ -1,0 +1,38 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  name: "metabase_add_member_to_group"
+  description: "Add existing user to a group."
+  vendor: metabase
+  type: remediation
+  version: "1.0.0"
+envs:
+  - name: USERNAME
+    description: "Service account username."
+    type: "string"
+    required: true
+    example: "apikeyusername@email.com"
+  - name: PASSWORD
+    description: "Service account password."
+    type: "string"
+    required: true
+  - name: HOST
+    description: "Metabase service url."
+    type: "string"
+    example: "metabase.data.svc.cluster.local"
+  - name: GROUP_NAME
+    description: "Metabase group name."
+    type: "string"
+    required: true
+  - name: REQUESTER
+    description: "DB access requester email."
+    type: "string"
+    required: true
+
+
+
+outputs:
+  - name: output
+    description: "Json output contains the operation details."
+    type: "json"
+    example: '{"User":"requester@email.com","Message":"Added to group"}' 

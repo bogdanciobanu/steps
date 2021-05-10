@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "ssh_parallel_command"
   description: "Run command over ssh protocol in parallel for multiple hosts."
   vendor: ssh

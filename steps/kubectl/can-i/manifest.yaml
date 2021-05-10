@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "kubectl_can_i"
   description: "Check whether you authorized to run certain command."
   vendor: kubernetes

@@ -1,0 +1,3 @@
+
+name = "metabase/remove-member-from-group"
+includes = ["{{ .root }}/baur-includes/step.toml#build-step"]

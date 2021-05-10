@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "coralogix_query"
   description: "Perform an arbitrary Coralogix search query."
   vendor: coralogix

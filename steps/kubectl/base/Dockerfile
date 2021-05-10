@@ -1,5 +1,4 @@
-ARG BASE_BRANCH
-FROM us-docker.pkg.dev/stackpulse/public/base:$BASE_BRANCH AS stepsBase
+FROM us-docker.pkg.dev/stackpulse/public/base:1.0.0 AS stepsBase
 FROM golang:1.14-alpine
 
 COPY --from=stepsBase /usr/local/bin/ /usr/local/bin/

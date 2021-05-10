@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "rabbitmq_channels"
   description: "Get information about RabbitMQ channels"
   vendor: rabbitmq

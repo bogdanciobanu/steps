@@ -2,6 +2,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "bigquery_query"
   description: "Ad-hoc SQL query for BigQuery tables."
   vendor: bigquery

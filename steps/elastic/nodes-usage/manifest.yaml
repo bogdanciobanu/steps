@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "elastic_nodes_usage"
   description: "Get elastic nodes usage."
   vendor: elastic

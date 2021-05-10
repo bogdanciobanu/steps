@@ -1,10 +1,11 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "ssh_with_aws_secret"
   description: "Connect to remote SSH server, authenticating with a content of AWS Secret, and execute command(s)"
   vendor: aws
-  type: remediation 
+  type: remediation
 
 envs:
   - name: SSH_KEY_SECRET_NAME
@@ -12,11 +13,16 @@ envs:
     type: "string"
   - name: SSH_CLIENT
     description: "Address of the server to connect to, i.e. user@destination:port"
-    type: "string"    
+    type: "string"
   - name: SSH_COMMAND
     description: "One (or multiple, separated with a semicolon) command(s) to execute"
-    type: "string"    
+    type: "string"
   - name: INTEGRATION_TYPE_AWS
     description: "An AWS integration having a role to access AWS Secrets Manager (alternatively - SSH_KEY_SECRET_NAME / AWS_SECRET_ACCESS_KEY"
     type: secret
     required: true
+  - name: CONNECTION_TIMEOUT
+    description: "Timeout for SSH connection in seconds"
+    required: true
+    type: "int"
+    default: "30"

@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "prometheus_query"
   description: "Execute a query on Prometheus."
   vendor: prometheus 

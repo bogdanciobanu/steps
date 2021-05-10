@@ -16,6 +16,7 @@ type Args struct {
 	GracePeriod    int           `env:"GRACE_PERIOD" envDefault:"-1"`
 	IgnoreNotFound bool          `env:"IGNORE_NOT_FOUND" envDefault:"false"`
 	Cascade        bool          `env:"CASCADE" envDefault:"true"`
+	Force          bool          `env:"FORCE" envDefault:"false"`
 	Timeout        time.Duration `env:"TIMEOUT" envDefault:"0s"`
 }
 
@@ -76,6 +77,10 @@ func (d *Delete) Delete() (output []byte, exitCode int, err error) {
 	cmdArgs = append(cmdArgs, "--ignore-not-found", strconv.FormatBool(d.Args.IgnoreNotFound))
 	cmdArgs = append(cmdArgs, "--cascade", strconv.FormatBool(d.Args.Cascade))
 	cmdArgs = append(cmdArgs, "--timeout", d.Args.Timeout.String())
+
+	if d.Args.Force {
+		cmdArgs = append(cmdArgs, "--force")
+	}
 
 	// Ignoring format because delete has not json format
 	return d.kctl.Execute(cmdArgs, base2.IgnoreFormat)

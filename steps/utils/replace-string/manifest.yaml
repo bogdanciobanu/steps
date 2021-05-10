@@ -1,8 +1,9 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "replace_string"
-  description: "This step replaces sub-string by another sub-string for give base64 string."
+  description: "This step replaces sub-string or a regular expression by another sub-string for a given base64 string."
   vendor: custom
   type: custom
 
@@ -19,3 +20,6 @@ envs:
     description: "The sub-string to replace with."
     type: "string"
     required: true
+  - name: REGEX
+    type: bool
+    description: "Whether the sub string source (SUB_STR_SRC) is a regular expression or not."

@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "rundeck_execution_info"
   description: "Get execution info."
   vendor: rundeck
@@ -50,25 +51,26 @@ outputs:
   - name: job
     description: "Info about the executed job. see details at StackPulse's List jobs' step outputs."
     type: "json"
-    example: '{"id"\:"846a2025-7895-4af2-a594-a0a9174339ec","name"\:"Promote","group"\:"release","project"\:"anvils","description"\:"promote software packages to the ops repository -- shows dynamic cascading options","options"\:{"packages"\:"app-SNAPSHOT.tgz,db-SNAPSHOT.tgz,web-SNAPSHOT.tgz","release"\:"SNAPSHOT","repository"\:"ci"},"href"\:"http\://192.168.50.2\:4440/api/38/job/846a2025-7895-4af2-a594-a0a9174339ec","permalink"\:"http\://192.168.50.2\:4440/project/anvils/job/show/846a2025-7895-4af2-a594-a0a9174339ec","averageDuration"\:527}'
+    example: |
+      {"id":"846a2025-7895-4af2-a594-a0a9174339ec","name":"Promote","group":"release","project":"anvils","description":"promote software packages to the ops repository -- shows dynamic cascading options","options":{"packages":"app-SNAPSHOT.tgz,db-SNAPSHOT.tgz,web-SNAPSHOT.tgz","release":"SNAPSHOT","repository":"ci"},"href":"http://192.168.50.2:4440/api/38/job/846a2025-7895-4af2-a594-a0a9174339ec","permalink":"http://192.168.50.2:4440/project/anvils/job/show/846a2025-7895-4af2-a594-a0a9174339ec","averageDuration":527}
   - name: argstring
     description: "String of raw execution command arguments."
     type: "string"
     example: "-packages app-SNAPSHOT.tgz,db-SNAPSHOT.tgz,web-SNAPSHOT.tgz"
-   - name: href
+  - name: href
     description: "Execution HREF url"
     type: "string"
-    example: "http\://rundeck.server\:4440/api/38/execution/93"
+    example: "http://rundeck.server:4440/api/38/execution/93"
   - name: permalink
     description: "Permanent link to Execution"
     type: "string"
-    example: "http\://rundeck.server\:4440/project/anvils/execution/show/93"
+    example: "http://rundeck.server:4440/project/anvils/execution/show/93"
   - name: project
     description: "Execution project"
     type: "string"
     example: "anvils"
   - name: execution_type
-    description: "Can be one of \: scheduled (schedule trigger), user (user trigger), user-scheduled (user scheduled trigger)."
+    description: "Can be one of : scheduled (schedule trigger), user (user trigger), user-scheduled (user scheduled trigger)."
     type: "string"
     example: "user"
   - name: user
@@ -78,11 +80,13 @@ outputs:
   - name: date_started
     description: "An object that contains the start time of the execution, in both unix time and UTC."
     type: "json"
-    example: '{"unixtime"\:1613834976713,"date"\:"2021-02-20T15\:29\:36Z"}'
+    example: |
+      {"unixtime":1613834976713,"date":"2021-02-20T15:29:36Z"}
   - name: date_ended
     description: "An object that contains the end time of the execution, in both unix time and UTC."
     type: "json"
-    example: '{"unixtime"\:1613834976713,"date"\:"2021-02-20T15\:29\:36Z"}'
+    example: |
+      {"unixtime":1613834976713,"date":"2021-02-20T15:29:36Z"}
   - name: successful_nodes
     description: "If the execution was is finished, a list of node names that succeeded."
     type: "json"

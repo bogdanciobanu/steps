@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "rundeck_job_run"
   description: "Run a specific job."
   vendor: rundeck

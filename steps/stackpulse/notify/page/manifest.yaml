@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "stackpulse_page"
   description: "Page a person using a phone call or SMS and receive an acknowledgment."
   vendor: stackpulse
@@ -9,7 +10,7 @@ envs:
   - name: USER
     description: "The email of the user you want to notify. The user must set a phone number in his StackPulse account, otherwise the step will fail."
     type: "string"
-    reqired: true
+    required: true
     example: "johndoe@stackpulse.io"
   - name: MESSAGE
     description: "Text will be sent to destination."
@@ -20,8 +21,7 @@ envs:
     description: "Flow type."
     type: "string"
     default: "PHONE_CALL"
-    example: "PHONE_CALL"
-    example: "SMS"
+    example: "PHONE_CALL|SMS"
   - name: PHONE_NUMBER
     description: "Phone number to be directly paged. Can be used when a user has not set up a number in StackPulse. If used then the USER environment variable must not be used."
     type: "string"

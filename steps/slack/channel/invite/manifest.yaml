@@ -2,6 +2,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "slack_invite_channel"
   description: "Invite users into a slack channel."
   vendor: slack
@@ -17,6 +18,10 @@ envs:
     description: "A comma separated list of user emails to invite to the channel."
     type: string
     example: "user1@example.com,user2@example.com"
+  - name: BOTS
+    description: "A comma separated list of bot users to invite to the channel. Could be either the bot name starting with @, or the bot ID."
+    type: string
+    example: "@geekbot,U017A33VD53"
 
 outputs:
   - name: channel_id

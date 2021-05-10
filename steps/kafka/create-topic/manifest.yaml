@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "kafka_create_topic"
   description: "Create a Kafka topic"
   vendor: kafka

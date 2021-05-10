@@ -1,11 +1,12 @@
 # Globals
+ARG BASE_BRANCH=1.0.0
 ARG BASEDIR=/go/src/github.com/stackpulse
 ARG BINARY_NAME=delete
 ARG CURRENT_BRANCH
 ARG STEP_BASEPATH
 
 # 1. Base
-FROM us-docker.pkg.dev/stackpulse/public/kubectl/base:$CURRENT_BRANCH AS base
+FROM us-docker.pkg.dev/stackpulse/public/kubectl/base:1.0.0 AS base
 
 # 2. Builder
 FROM golang:1.14-alpine as builder

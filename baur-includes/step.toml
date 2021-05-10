@@ -10,7 +10,7 @@
     include_id = "build-step"
 
     # Command to execute.
-    command = ["python", "{{ .root }}/scripts/builder/build_step.py"]
+    command = ["{{ .root }}/scripts/builder/build_step.py"]
 
     # Inputs that are tracked to detect if a task needs to be run.
     [Task.Input]
@@ -46,7 +46,7 @@
     include_id = "build-step-level-2"
 
     # Command to execute.
-    command = ["python", "{{ .root }}/scripts/builder/build_step.py"]
+    command = ["{{ .root }}/scripts/builder/build_step.py"]
 
     # Inputs that are tracked to detect if a task needs to be run.
     [Task.Input]
@@ -85,7 +85,7 @@
     include_id = "build-step-level-3"
 
     # Command to execute.
-    command = ["python", "{{ .root }}/scripts/builder/build_step.py"]
+    command = ["{{ .root }}/scripts/builder/build_step.py"]
 
     # Inputs that are tracked to detect if a task needs to be run.
     [Task.Input]

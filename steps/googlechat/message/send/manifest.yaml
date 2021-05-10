@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "googlechat_send_message"
   description: "Send a message to Google Chat via webhook"
   vendor: googlechat
@@ -35,7 +36,7 @@ outputs:
   - name: api_object
     description: "Object containing an message response from the Google Chat API."
     type: "json"
-    exmaple: |
+    example: |
       {
         "name":"spaces/AAAAQ13GCRU/messages/p_2OJ_6Juvw.p_2OJ_6Juvw",
         "sender":{

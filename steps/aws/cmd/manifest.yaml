@@ -1,8 +1,8 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "aws_cli_command"
-  imageName: "amazon/aws-cli"
   description: "Generic AWS CLI command"
   vendor: aws
   type: advanced

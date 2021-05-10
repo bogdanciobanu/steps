@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "kafka_describe_topics"
   description: "Describe a Kafka topic(s)"
   vendor: kafka

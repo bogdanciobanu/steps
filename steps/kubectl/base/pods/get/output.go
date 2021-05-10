@@ -29,6 +29,37 @@ var parsingConfiguration = map[string]*base2.JsonParseConfig{
 	"initContainerStatuses":  {ParseFunc: InitContainerStatuses},
 }
 
+type Pod struct {
+	Name                   string
+	Status                 string
+	Age                    string
+	IP                     string   `json:"IP"`
+	IPs                    []string `json:"IPs"`
+	Node                   string
+	InitContainersCount    int
+	ContainersCount        int
+	ContainersRestarts     int
+	InitContainersRestarts int
+	InitFinished           bool
+	ContainerStatuses      map[string]ContainerStatus
+	InitContainerStatuses  map[string]ContainerStatus
+}
+
+type ContainerStatus struct {
+	ContainerID  string `json:"containerID"`
+	FinishedAt   time.Time
+	Image        string
+	LastState    map[string]interface{}
+	Ready        bool
+	RestartCount int
+	StartedAt    time.Time
+	State        string
+}
+
+type Pods struct {
+	Items []Pod
+}
+
 // Aggregating the restarts from all the containers
 func getRestartCount(path string, item *gabs.Container) int {
 	containerStatuses := item.Path(path).Children()

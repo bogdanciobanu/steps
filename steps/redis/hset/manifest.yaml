@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "redis_hset"
   description: "Perform Redis hset call (https://redis.io/commands/hset)"
   vendor: redis

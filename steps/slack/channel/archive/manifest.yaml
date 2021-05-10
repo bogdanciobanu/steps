@@ -2,6 +2,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "slack_archive_channel"
   description: "Archive slack channel."
   vendor: slack

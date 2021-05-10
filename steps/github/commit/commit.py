@@ -30,7 +30,7 @@ def main():
     gh = github.Github(token)
     repo = gh.get_repo(repo)
 
-    branch = f"stackpulse-{name}"
+    branch = f"SP-Playbook-{name}"
     ref = repo.create_git_ref(f"refs/heads/{branch}", repo.get_branch(base).commit.sha)
 
     update_file = True

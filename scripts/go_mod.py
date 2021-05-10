@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 """
     Runs
         - go get ./...
@@ -14,7 +14,7 @@ import sys
 def main():
     for step in steps.get_go_steps():
         cur_dir = os.getcwd()
-        print("> Running in: %s" % (step,))
+        print(f"> Running in: {step}")
         os.chdir(step)
         os.system("go get ./...")
         os.system("go mod download")

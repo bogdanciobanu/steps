@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "victorops_get_incident"
   description: "Retrieve information about a specific incident"
   vendor: victorops

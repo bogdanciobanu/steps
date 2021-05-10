@@ -1,3 +1,0 @@
-
-name = "gcloud/gcloud-cli"
-includes = ["{{ .root }}/baur-includes/step.toml#build-step"]

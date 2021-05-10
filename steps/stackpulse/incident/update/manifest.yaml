@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "stackpulse_update_incident"
   description: "Update existing incident."
   vendor: stackpulse
@@ -62,6 +63,3 @@ outputs:
     description: "The updated incident id."
     type: "string"
     example: "INC-00226"
-
-integrations:
-  - slack

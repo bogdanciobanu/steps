@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "python_inline_script"
   description: "This step will execute an inline Python Script"
   vendor: python

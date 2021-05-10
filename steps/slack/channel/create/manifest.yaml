@@ -2,6 +2,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "slack_create_channel"
   description: "Create a new channel, set its topic and purpose, and invite users into it."
   vendor: slack
@@ -17,6 +18,10 @@ envs:
     description: "A comma separated list of user emails to invite to the new channel."
     type: string
     example: "luna@stackpulse.io,asher@stackpulse.io,avery@stackpulse.io"
+  - name: BOTS
+    description: "A comma separated list of bot users to invite to the channel. Could be either the bot name starting with @, or the bot ID."
+    type: string
+    example: "@geekbot,U017A33VD53"
   - name: TOPIC
     description: "The topic to be set for the new created channel."
     type: string

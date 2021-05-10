@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "redis_client_list"
   description: "Get a list of connected Redis clients."
   vendor: redis
@@ -26,7 +27,7 @@ envs:
     type: "string"
     example: "redis://<username>:<password>@<host>:<port>/<database>"
   - name: LIMIT 
-    description: "Maximum amount of clients to be listed. default\: no limit."
+    description: "Maximum amount of clients to be listed. default: no limit."
     type: "int"
     example: 20
   - name: ORDER_BY

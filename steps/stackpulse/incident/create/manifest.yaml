@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "stackpulse_create_incident"
   description: "Create new StackPulse incident."
   vendor: stackpulse
@@ -45,22 +46,21 @@ envs:
     default: "internal"
     example: "customer"
   - name: SLACK_WAR_ROOM_NAME
-    description: "New Slack War Room name (specify without '#')."
+    description: "New Slack War Room name (specify without '#'), requires slack integration."
     type: string
     example: "inc-0005-war-room"
+    required: false
   - name: SLACK_WAR_ROOM_CHANNEL_ID
     description: "A valid Slack channel id."
     type: string
+    required: false
   - name: SLACK_WAR_ROOM_TEAM_ID
     description: "New Slack War Room team id."
     type: string
+    required: false
 
 outputs:
   - name: incident_id
     description: "The created incident id."
     type: "string"
     example: "INC-00247"
-
-
-integrations:
-  - slack

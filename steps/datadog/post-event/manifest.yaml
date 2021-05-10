@@ -1,0 +1,54 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  name: "datadog_post_event"
+  description: "Post events to a Datadog Stream"
+  vendor: datadog
+  type: notification
+  version: 1.0.0
+
+envs:
+  - name: DD_SITE
+    description: "Datadog destination site for the metrics, traces, and logs. Defaults to datadoghq.com."
+    type: "string"
+    required: false
+    example: "us3.datadoghq.com"
+  - name: TITLE
+    description: "The event title. Limited to 100 characters."
+    type: "string"
+    required: true
+    example: "My event title"
+  - name: TEXT
+    description: "The body of the event. Limited to 4000 characters."
+    type: "string"
+    required: true
+    example: "My event content"
+  - name: TAGS
+    description: "A comma delimited list of string tags to attach to the event."
+    type: "string"
+    required: false
+    example: "db,customer-impact,africa-site"
+  - name: AGGREGATION_KEY
+    description: "An arbitrary string to use for aggregation. Limited to 100 characters. If you specify a key, all events using that key are grouped together in the Event Stream."
+    type: "string"
+    required: false
+    example: "MY-AGGREGATION-KEY"
+  - name: RELATED_EVENT_ID
+    description: "ID of a parent event if applicable."
+    type: int
+    required: false
+    example: 5909946415021413243
+
+outputs:
+  - name: id
+    description: "An Integer representing the ID of the event."
+    type: int
+    example: 5909946549969953482
+  - name: api_object
+    description: "Object containing an event response from the Datadog API."
+    type: "json"
+    example: |
+      {"event":{"date_happened":1616522954,"id":5909943598815739809,"tags":["tag1","tag2"],"text":"my text","title":"test event","url":"https://app.datadoghq.com/event/event?id=5909943598815739809"},"status":"ok"}
+
+integrations:
+  - datadog_token

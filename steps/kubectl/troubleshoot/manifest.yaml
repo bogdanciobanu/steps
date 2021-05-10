@@ -1,0 +1,45 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  name: "kubernetes_troubleshoot"
+  description: "Troubleshooting summary for kubernetes cluster"
+  vendor: kubernetes
+  type: triage
+  version: 1.0.0
+
+envs:
+  - name: KUBECONFIG_CONTENT
+    description: "kubeconfig content for authentication. base64 encoded kubeconfig file. could be provided by kubernetes integration as well."
+    type: "string"
+    required: false
+    example: '{{ secret "KUBECONFIG_CONTENT" }}'
+  - name: NAMESPACE
+    description: "Namespace to run the command in. (Default is 'default')"
+    type: "string"
+    example: "monitoring"
+    default: "default"
+  - name: ALL_NAMESPACES
+    description: "If true, running command on all namespaces"
+    type: "bool"
+    example: "true"
+  - name: FIELD_SELECTOR
+    description: "Applying the given field selector to the command. See https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors for details"
+    type: "string"
+    example: "status.phase=Running"
+  - name: DEBUG
+    description: "Print debug outputs"
+    type: "bool"
+    example: "true"
+
+integrations:
+  - k8s
+
+outputs:
+  - name: raw
+    description: "JSON representation of troubleshoot response findings"
+    type: "json"
+    example: '{"CronJob":null,"DaemonSet":null,"Deployment":null,"Endpoints":null,"HorizontalPodAutoscaler":[{"LastTimestamp":"2021-04-13T13:08:49Z","Message":"deployments/scale.apps \"abc\" not found","ObjectName":"abc","ObjectNamespace":"default","ObjectType":"HorizontalPodAutoscaler","Reason":"FailedGetScale","Type":"Warning"}],"Ingress":null,"Job":null,"PersistentVolumeClaim":null,"Pod":[{"LastTimestamp":"2021-04-13T13:03:32Z","Message":"Liveness probe failed: Get http://10.44.12.65:4191/live: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)","ObjectName":"cbd-6dbf887b8-fn7bj","ObjectNamespace":"default","ObjectType":"Pod","Reason":"Unhealthy","Type":"Warning"}],"ReplicaSet":null,"Service":[{"LastTimestamp":"2021-04-13T12:46:35Z","Message":"Error updating Endpoint Slices for Service default/xyz: failed to update xyz-6sdl5 EndpointSlice for Service default/xyz: Operation cannot be fulfilled on endpointslices.discovery.k8s.io \"xyz-6sdl5\": the object has been modified; please apply your changes to the latest version and try again","ObjectName":"xyz","ObjectNamespace":"default","ObjectType":"Service","Reason":"FailedToUpdateEndpointSlices","Type":"Warning"}],"StatefulSet":null}'
+  - name: markdown
+    description: "markdown representation of troubleshoot findings"
+    type: "string"
+    example: '## Summary\n&nbsp;\n|                    |          KIND           |\n|--------------------|-------------------------|\n| :x:                | HorizontalPodAutoscaler |\n| :x:                | Pod                     |\n| :x:                | Service                 |\n| :white_check_mark: | CronJob                 |\n| :white_check_mark: | DaemonSet               |\n| :white_check_mark: | Deployment              |\n| :white_check_mark: | Endpoints               |\n| :white_check_mark: | Ingress                 |\n| :white_check_mark: | Job                     |\n| :white_check_mark: | PersistentVolumeClaim   |\n| :white_check_mark: | ReplicaSet              |\n| :white_check_mark: | StatefulSet             |\n\n&nbsp;\n&nbsp;\n## Findings\n---\n&nbsp;\n### HorizontalPodAutoscaler\n| LAST SEEN |     OBJECT NAME      | NAMESPACE |            REASON            |                                                                                                                                      MESSAGE                                                                                                                                      |\n|-----------|----------------------|-----------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| 2m24s     | abc                  | default   | FailedGetScale               | deployments/scale.apps "abc" not found                                                                                                                                                                                                                                            |\n\n&nbsp;\n### Pod\n| LAST SEEN |          OBJECT NAME           | NAMESPACE |  REASON   |                                                                               MESSAGE                                                                               |\n|-----------|--------------------------------|-----------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| 7m41s     | cbd-6dbf887b8-fn7bj            | default   | Unhealthy | Liveness probe failed: Get http://10.44.12.65:4191/live: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)   |\n\n&nbsp;\n### Service\n| LAST SEEN | OBJECT NAME | NAMESPACE |            REASON            |                                                                                                                                                               MESSAGE                                                                                                                                                               |\n|-----------|-------------|-----------|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| 24m38s    | xyz         | default   | FailedToUpdateEndpointSlices | Error updating Endpoint Slices for Service default/xyz: failed to update xyz-6sdl5 EndpointSlice for Service default/xyz: Operation cannot be fulfilled on endpointslices.discovery.k8s.io "xyz-6sdl5": the object has been modified; please apply your changes to the latest version and try again                               |\n\n&nbsp;'

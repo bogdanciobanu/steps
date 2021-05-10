@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "opsgenie_create_incident"
   description: "Create a new OpsGenie incident for a service"
   vendor: opsgenie

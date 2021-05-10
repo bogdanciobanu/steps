@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "aws_redshift_data_utils_get_blocking_locks"
   description: "Identify blocking locks as well as determine what/who is blocking a query by awslabs/utils."
   vendor: aws

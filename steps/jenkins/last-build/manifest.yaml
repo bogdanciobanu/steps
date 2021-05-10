@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "jenkins_last_build"
   description: "Return last completed, successful, failed and stable builds"
   vendor: jenkins

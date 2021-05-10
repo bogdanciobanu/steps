@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "ssh_command"
   description: "Run command over ssh protocol."
   vendor: ssh
@@ -38,6 +39,16 @@ envs:
     type: "string"
     required: false
     example: "secretP@ssword"
+  - name: AWS_SECRET_KEY
+    description: "AWS Secrets manager secret key that would store the ssh private key (in case the ssh private key is not stored as a custom secret). AWS_REGION must be provided when using this variable."
+    type: "string"
+    required: false
+    example: "my-aws-secret"
+  - name: AWS_REGION
+    description: "Region for AWS secret key. Must be provided if AWS_SECRET_KEY is used."
+    type: "string"
+    required: false
+    example: "us-west-2"
   - name: STRICT_HOST_KEY_CHECKING
     description: "whether use strict host key checking."
     type: "string"

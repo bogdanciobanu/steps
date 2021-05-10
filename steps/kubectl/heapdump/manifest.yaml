@@ -1,0 +1,63 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  name: "kubectl_jattach_heapdump"
+  description: |
+    Dump heap memory of Java application running in a kubernetes pod.
+    Make sure your runner has the following permissions to perform on the target pod's cluster:
+    - apiGroups:
+      - ""
+      resources:
+      - pods/exec
+      verbs:
+      - create
+  vendor: kubernetes
+  type: triage
+  version: "1.0.0"
+
+envs:
+  - name: RUNTIME
+    description: "Runtime technology to perform the heap dump on. Currently support only 'JVM'."
+    required: true
+    type: string
+    example: "JVM"
+  - name: BUCKET
+    description: "Object URL format for the bucket to store the outputs. If using a GCS or S3 bucket please specify a GCP or AWS integration appropriately."
+    type: string
+    example: "gs://heap-dumps"
+  - name: POD_NAME
+    description: "Target pod name that runs the Java application we would like to perform the heap-dump on."
+    required: true
+    type: string
+    example: "java-app-67dc9f7cbd-54nq8"
+  - name: CONTAINER
+    description: "Specific container to run the commands on."
+    type: string
+    required: false
+    example: "app"
+  - name: CONTAINER_SHELL
+    description: "Custom shell to execute the pods commands on."
+    type: string
+    required: false
+    default: "bash"
+    example: "/bin/ash"
+  - name: NAMESPACE
+    description: "Namespace that the target pod is running at. Keeping this field empty will not set any namespace for the commands but use the default one."
+    type: string
+    required: false
+    example: "stackpulse"
+  - name: KUBECONFIG_CONTENT
+    description: "Base64 content of kubeconfig content for authentication. Could be provided by kubernetes integration as well."
+    required: false
+    type: string
+    example: '{{ secret "KUBECONFIG_CONTENT" }}'
+
+
+integrations:
+  - k8s
+
+outputs:
+  - name: dump_file_uri
+    description: "Object URL for the output dump file"
+    type: string
+    example: "gs://heap-dumps/heapdump_1618129442.hprof"

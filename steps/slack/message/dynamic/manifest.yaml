@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "slack_send_dynamic_message"
   description: "Send a simple text message, or snippet, to a Slack channel or user."
   vendor: slack
@@ -35,6 +36,10 @@ envs:
     description: "Image type of the image file. Ignored if IMAGE_LINK is empty."
     type: string
     example: "jpg"
+  - name: INITIAL_COMMENT
+    description: "The message header introducing the message text"
+    type: string
+    example: "StackPulse Message"
 
 outputs:
   - name: message_recipient

@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "rundeck_abort_execution"
   description: "Abort a running execution."
   vendor: rundeck

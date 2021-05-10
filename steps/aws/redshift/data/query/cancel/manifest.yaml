@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "aws_redshift_data_query_cancel"
   description: "Cancel current running queries. An enhancement upon pg_cancel_backend (See https://docs.aws.amazon.com/redshift/latest/dg/PG_CANCEL_BACKEND.html)"
   vendor: aws

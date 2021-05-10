@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "postgress_query"
   description: "Running raw SQL query on PosgreSQL Database."
   vendor: postgres 
@@ -33,11 +34,11 @@ envs:
     required: true
     type: "string"
   - name: FIELD_SEPERATOR
-    description: "Field separator for psql command (`-F` in psql docs). Relevant for output parsing, override only if output contains the default separator\: ';;-;;'"
+    description: "Field separator for psql command (`-F` in psql docs). Relevant for output parsing, override only if output contains the default separator: ';;-;;'"
     type: "string"
     required: false
   - name: RECORD_SEPERATOR
-    description: "Record separator for psql command (`-R` in psql docs). Relevant for output parsing, override only if output contains the default separator\: ';;=;;'"
+    description: "Record separator for psql command (`-R` in psql docs). Relevant for output parsing, override only if output contains the default separator: ';;=;;'"
     type: "string"
     required: false
   - name: USE_SSH
@@ -57,19 +58,19 @@ envs:
     type: "string"
     required: false
   - name: SSH_PORT
-    description: "The SSH port to connect to (default\: 22). Ignored when not in SSH mode."
+    description: "The SSH port to connect to (default: 22). Ignored when not in SSH mode."
     type: "string"
     required: false
   - name: SSH_REMOTE_POSTGRES_SERVER
-    description: "The postgres remote host to connect from the SSH host (default\: 127.0.0.1). Ignored when not in SSH mode."
+    description: "The postgres remote host to connect from the SSH host (default: 127.0.0.1). Ignored when not in SSH mode."
     type: "string"
     required: false
   - name: SSH_REMOTE_POSTGRES_PORT
-    description: "The postgres remote port to connect from the SSH host (default\: 5432). Ignored when not in SSH mode."
+    description: "The postgres remote port to connect from the SSH host (default: 5432). Ignored when not in SSH mode."
     type: "string"
     required: false
   - name: SSH_WAIT_FOR_TUNNEL_TIMEOUT
-    description: "Timeout waiting for the tunnel to start listening (default\: 30s). Ignored when not in SSH mode."
+    description: "Timeout waiting for the tunnel to start listening (default: 30s). Ignored when not in SSH mode."
     type: "string"
     required: false
     example: "30s"
@@ -94,7 +95,7 @@ envs:
     type: "bool"
     required: false
   - name: DOCKER_CONTAINER_POSTGRES_SERVER
-    description: "The postgres server host inside the docker container (default\: 127.0.0.1). Ignored when not in DOCKER_EXEC mode"
+    description: "The postgres server host inside the docker container (default: 127.0.0.1). Ignored when not in DOCKER_EXEC mode"
     type: "string"
     required: false
 

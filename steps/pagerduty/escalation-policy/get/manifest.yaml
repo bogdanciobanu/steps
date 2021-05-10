@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "pagerduty_escalation_policy_get"
   description: "Get PagerDuty escalation policy."
   vendor: pagerduty

@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "slack_send_snippet"
   description: "Send a snippet, a file, to a Slack channel or user."
   vendor: slack

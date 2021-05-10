@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "victorops_incident_create_note"
   description: "Create a note for incident."
   vendor: victorops

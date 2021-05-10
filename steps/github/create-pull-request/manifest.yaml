@@ -1,0 +1,58 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  name: "github_create_pull_request"
+  description: "Creates a Github pull request from a base branch with commits on it, to a another branch. "
+  vendor: github
+  type: triage
+  version: 1.0.0
+
+envs:
+  - name: OWNER
+    description: "Owner name of the repository. Can be a user or an organization name."
+    type: "string"
+    required: true
+    example: "my-org"
+  - name: REPOSITORY
+    description: "Name of the GitHub repository in which both branches reside."
+    type: "string"
+    required: true
+    example: "my-repository"
+  - name: BASE_BRANCH
+    description: "Name of the remote branch that you want to pull into the target branch. this branch must have a diff from its base."
+    type: "string"
+    default: "main"
+    required: true
+    example: "my-branch"
+  - name: HEAD_BRANCH
+    description: "Name of the branch you want to eventually merge into."
+    type: "string"
+    default: "main"
+    required: true
+    example: "my-branch"
+  - name: TITLE
+    description: "Title of the pull request."
+    type: "string"
+    required: true
+    example: "folder/folder/manifest.yaml"
+
+outputs:
+  - name: branch
+    description: "Name of the base branch."
+    type: "string"
+    example: "my-branch"
+  - name: link
+    description: "Url of the pull request in GitHub."
+    type: "string"
+    example: "https://github.com/owner/repository/pull/3"
+  - name: author
+    description: "The Github user that created the request."
+    type: "string"
+    example: "my1username"
+  - name: state
+    description: "Current state of the pull request."
+    type: "string"
+    example: "OPEN"
+
+integrations:
+  - github

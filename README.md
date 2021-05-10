@@ -16,7 +16,7 @@ Just like any other container, steps can receive input in the form of run argume
 
 ### Build tool
 
-The build tool used by the steps repository is called baur. You must install it on your machine from [here](https://github.com/simplesurance/baur/releases).
+The build tool used by the steps repository is called baur. You must install it on your machine from [here](https://github.com/simplesurance/baur/releases).  The currently supported version we use is *1.0-rc2*.
 
 Baur requires PostgreSQL to operate. After building a step once, the step's file hashes will be stored into postgres. Subsequent attempts to build the step will not do anything unless one of the files the step depends on are changed. 
 

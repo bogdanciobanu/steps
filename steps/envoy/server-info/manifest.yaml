@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "envoy_server_info"
   description: "Get server information from Envoy's administrative interface."
   vendor: envoy

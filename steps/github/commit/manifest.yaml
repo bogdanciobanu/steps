@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "github_open_pullrequest"
   description: "Create a pull-request to given repo by adding or modifying a single file."
   vendor: github
@@ -19,7 +20,7 @@ envs:
     required: true
     example: "myorganization/myrepository"
   - name: NAME
-    description: "Branch name for the pull request (prefixed by 'stackpulse-')."
+    description: "Branch name for the pull request (prefixed by 'SP-Playbook')."
     type: "string"
     required: true
     example: "auto-generated-branch"

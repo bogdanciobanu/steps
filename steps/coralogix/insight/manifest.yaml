@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "coralogix_insight"
   description: "Perform a Coralogix insight query."
   vendor: coralogix

@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "istio_proxy_config"
   description: "Run a proxy-config command on your Istio cluster."
   vendor: istio
@@ -16,7 +17,7 @@ envs:
     type: "bool"
     required: false
   - name: ISTIO_NAMESPACE
-    description: "Istio system namespace (default\: istio-system)"
+    description: "Istio system namespace (default: istio-system)"
     type: "string"
     required: false
   - name: CONTEXT
@@ -28,11 +29,11 @@ envs:
     type: "string"
     required: false
   - name: COMMAND
-    description: "Command to execute. Can be one of\: bootstrap, cluster, endpoint, listener, log, route, secret."
+    description: "Command to execute. Can be one of: bootstrap, cluster, endpoint, listener, log, route, secret."
     type: "string"
     required: true
   - name: POD
-    description: "Specific Pod to query\: [<pod-name[.namespace]>]."
+    description: "Specific Pod to query: [<pod-name[.namespace]>]."
     type: "string"
     required: true
 

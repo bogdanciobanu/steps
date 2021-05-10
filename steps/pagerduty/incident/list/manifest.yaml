@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "pagerduty_incident_list"
   description: "List PagerDuty incidents."
   vendor: pagerduty

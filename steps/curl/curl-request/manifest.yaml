@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "curl_request"
   description: "Make an HTTP(S) request with cURL"
   vendor: curl

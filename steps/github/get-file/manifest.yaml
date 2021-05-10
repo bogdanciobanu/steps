@@ -1,0 +1,40 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  name: "github_get_file"
+  description: "Query GitHub to retrieve a specified file."
+  vendor: github
+  type: triage
+  version: 1.0.0
+
+envs:
+  - name: OWNER
+    description: "Owner of the repository. Can be a user or an organization name."
+    type: "string"
+    required: true
+    example: "my-org"
+  - name: REPOSITORY
+    description: "Name of the GitHub repository in which the file resides."
+    type: "string"
+    required: true
+    example: "my-repository"
+  - name: BRANCH
+    description: "Name of the remote branch in which the file resides."
+    type: "string"
+    default: "main"
+    required: true
+    example: "my-branch"
+  - name: FILE_PATH
+    description: "Path to the file you want to retrieve, rooted in the repository."
+    type: "string"
+    required: true
+    example: "folder/folder/manifest.yaml"
+
+outputs:
+  - name: file_content
+    description: "Literal content of the retrieved file."
+    type: "string"
+    example: '---\napiVersion\: stackpulse.io/v1\nkind\: Step\nmetadata\:\n  name\: github_get_file\n  description\: Query GitHub to retrieve a specified file.\n'
+
+integrations:
+  - github

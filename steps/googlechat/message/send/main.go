@@ -4,17 +4,22 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/stackpulse/steps-sdk-go/env"
-	"github.com/stackpulse/steps-sdk-go/step"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"time"
+
+	"github.com/stackpulse/steps-sdk-go/env"
+	"github.com/stackpulse/steps-sdk-go/log"
+	"github.com/stackpulse/steps-sdk-go/step"
 )
 
 type MessageSend struct {
 	Webhook   string `env:"WEBHOOK,required"`
 	Message   string `env:"MESSAGE,required"`
 	ThreadKey string `env:"THREAD_KEY"`
+
+	parsedWebhook *url.URL
 }
 
 type output struct {
@@ -63,26 +68,31 @@ func (s *MessageSend) Init() error {
 		return err
 	}
 
+	parsedWebhook, err := url.Parse(s.Webhook)
+	if err != nil {
+		return fmt.Errorf("parse webhook URL: %w", err)
+	}
+	s.parsedWebhook = parsedWebhook
 	return nil
 }
 
 func (s *MessageSend) Run() (int, []byte, error) {
-	var postBody []byte
-	// Generated post body
 	if s.ThreadKey != "" {
-		postBody, _ = json.Marshal(map[string]string{
-			"text":   s.Message,
-			"thread": s.ThreadKey,
-		})
-	} else {
-		postBody, _ = json.Marshal(map[string]string{
-			"text": s.Message,
-		})
+		q := s.parsedWebhook.Query()
+		q.Set("threadKey", s.ThreadKey)
+		s.parsedWebhook.RawQuery = q.Encode()
 	}
-	responseBody := bytes.NewBuffer(postBody)
+	// Generated post body
+	postBody, _ := json.Marshal(map[string]string{
+		"text": s.Message,
+	})
 
+	requestBody := bytes.NewBuffer(postBody)
+
+	webhookURL := s.parsedWebhook.String()
+	log.Debugln("Sending post request to: %s. Body: %s", webhookURL, string(postBody))
 	// Send post to webhook
-	resp, err := http.Post(s.Webhook, "application/json", responseBody)
+	resp, err := http.Post(webhookURL, "application/json", requestBody)
 	if err != nil {
 		return step.ExitCodeFailure, nil, fmt.Errorf("get webhook : %w", err)
 	}
@@ -95,6 +105,10 @@ func (s *MessageSend) Run() (int, []byte, error) {
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return step.ExitCodeFailure, nil, fmt.Errorf("read body : %w", err)
+	}
+
+	if resp.StatusCode/100 != 2 {
+		return step.ExitCodeFailure, body, fmt.Errorf("got non 20X HTTP response code: %d(%s)", resp.StatusCode, resp.Status)
 	}
 
 	// Unmarshal response body

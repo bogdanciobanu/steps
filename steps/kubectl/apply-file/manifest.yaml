@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "kubectl_apply_file"
   description: "Apply a Kubernetes object file"
   vendor: kubernetes

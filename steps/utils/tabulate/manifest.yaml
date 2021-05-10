@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "tabulate"
   description: "Generate ASCII table from given input"
   vendor: custom
@@ -8,48 +9,52 @@ metadata:
 
 envs:
   - name: INPUT
-    description: "Input data to tabulate. Should be a valid JSON of map array [{...},{...}] or array of arrays [[...],[...]] or map of map arrays {\"x\":[{...},{...}], ...}"
+    description: |
+      Input data to tabulate. Should be a valid JSON of map array [{...},{...}] or array of arrays [[...],[...]] or map of map arrays {"x":[{...},{...}], ...} with all values being strings.
     type: string
-    example: '[{"name":"foo", "age":"32"},{"name":"bar", "age":"53"}]'
+    example: |
+      [{"name":"foo", "age":"32"},{"name":"bar", "age":"53"}]
     required: true
   - name: HEADERS
-    description: "List of headers for the table, or 'by_keys' string to extract headers from map keys (only available on array of maps input). Default is 'by_keys'"
+    description: "List of headers for the table, or 'by_keys' string to extract headers from map keys (only available on array of maps input). Default is `by_keys`."
     type: string
     required: false
     example: '["name", "age"]'
   - name: MAP_GROUP
-    description: "When given grouped map input ({\"x\":[{...},{...}], ...}), specifying the groups to include. Can specify multiple values separated by ',' or JSON array"
+    description: |
+      When given grouped map input ({"x":[{...},{...}], ...}), specifying the groups to include. Can specify multiple values separated by `,` or JSON array.
     type: string
     required: false
     example: '["group1", "group2"]'
   - name: GROUP_HEADER_NAME
-    description: "When given grouped map input ({\"x\":[{...},{...}], ...}), specifying the header of the group column. Default is 'group'"
+    description: |
+      When given grouped map input ({"x":[{...},{...}], ...}), specifying the header of the group column. Default is `group`.
     type: string
     required: false
   - name: COLUMN_WIDTH
-    description: "Table max column width. Default is 0 means automatic"
+    description: "Table max column width. Default is 0 means automatic."
     type: int
     required: false
     example: "40"
   - name: AUTO_WRAP
-    description: "Truncate new lines and wrap long text. Default is true"
+    description: "Truncate new lines and wrap long text. Default is `true`."
     type: bool
     required: false
   - name: SHOW_INDEXES
-    description: "Append index column indicating the index of the row in the given input. Default is false"
+    description: "Append index column indicating the index of the row in the given input. Default is `false`."
     type: bool
     required: false
   - name: MARKDOWN
-    description: "Generate table in markdown format. Default is false"
+    description: "Generate table in markdown format. Default is `false`."
     type: bool
     required: false
   - name: MAX_COLUMN_LENGTH
-    description: "Define the maximum length for column value. If greater then this length, it will be truncated and '...' will be added. Default is 0 means no limit"
+    description: "Define the maximum length for column value. If greater then this length, it will be truncated and '...' will be added. Default is 0 means no limit."
     type: int
     required: false
 
 outputs:
   - name: tabulate_output
-    description: "The tabulated output as a string"
+    description: "The tabulated output as a string."
     type: string
     example: "+-----+-----+------+\n| IDX | AGE | NAME |\n+-----+-----+------+\n|   0 |  32 | foo  |\n+-----+-----+------+\n|   1 |  53 | bar  |\n+-----+-----+------+\n"

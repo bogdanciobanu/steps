@@ -54,12 +54,12 @@ func (j *jiraCreateIssue) Run() (int, []byte, error) {
 
 	jiraClient, err := jira.NewClient(oauthClient, url)
 	if err != nil {
-		return step.ExitCodeFailure, nil, err
+		return step.ExitCodeFailure, nil, fmt.Errorf("create jira client: %w", err)
 	}
 
 	assignee, resp, err := jiraClient.User.Find(j.args.AssigneeEmail)
 	if err != nil {
-		return step.ExitCodeFailure, base.ExtractResponse(resp), err
+		return step.ExitCodeFailure, base.ExtractResponse(resp), fmt.Errorf("find assignee: %w", err)
 	}
 
 	if len(assignee) != 1 {
@@ -88,7 +88,7 @@ func (j *jiraCreateIssue) Run() (int, []byte, error) {
 	if j.args.ReporterEmail != "" {
 		reporter, resp, err := jiraClient.User.Find(j.args.ReporterEmail)
 		if err != nil {
-			return step.ExitCodeFailure, base.ExtractResponse(resp), err
+			return step.ExitCodeFailure, base.ExtractResponse(resp), fmt.Errorf("find reporter: %w", err)
 		}
 
 		if len(reporter) != 1 {
@@ -102,7 +102,7 @@ func (j *jiraCreateIssue) Run() (int, []byte, error) {
 
 	createdIssue, resp, err := jiraClient.Issue.Create(&i)
 	if err != nil {
-		return step.ExitCodeFailure, base.ExtractResponse(resp), err
+		return step.ExitCodeFailure, base.ExtractResponse(resp), fmt.Errorf("create issue: %w", err)
 	}
 
 	jsonOutput, err := json.Marshal(&output{

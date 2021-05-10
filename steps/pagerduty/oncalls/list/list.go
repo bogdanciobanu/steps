@@ -95,6 +95,7 @@ func (p *PagerDutyOnCallsList) getEscalationPolicyIdsByNames(epNames []string) (
 
 func (p *PagerDutyOnCallsList) Run() (exitCode int, output []byte, err error) {
 	onCallOpts, err := p.buildListOpts()
+	getUserOpts := pd.GetUserOptions{}
 	if err != nil {
 		return step.ExitCodeFailure, nil, err
 	}
@@ -104,11 +105,18 @@ func (p *PagerDutyOnCallsList) Run() (exitCode int, output []byte, err error) {
 		return step.ExitCodeFailure, nil, err
 	}
 
+	for key, value := range res.OnCalls {
+		userId := value.User.ID
+		user, err := p.client.GetUser(userId, getUserOpts)
+		if err != nil {
+			return step.ExitCodeFailure, nil, err
+		}
+		res.OnCalls[key].User.Email = user.Email
+	}
 	marshaledOnCall, err := json.Marshal(res.OnCalls)
 	if err != nil {
 		return step.ExitCodeFailure, nil, err
 	}
-
 	return step.ExitCodeOK, marshaledOnCall, nil
 }
 

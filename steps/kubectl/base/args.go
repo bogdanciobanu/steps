@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/caarlos0/env/v6"
+	"github.com/stackpulse/steps-sdk-go/env"
 	"github.com/stackpulse/steps-sdk-go/log"
 )
 
@@ -24,7 +24,7 @@ type Args struct {
 	Namespace               string            `env:"NAMESPACE" envDefault:"default"`
 	Format                  string            `env:"FORMAT" envDefault:"json"`
 	AllNamespaces           bool              `env:"ALL_NAMESPACES" envDefault:"false"`
-	FieldSelector           string            `env:"FIELD_SELECTOR"`
+	FieldSelector           []string          `env:"FIELD_SELECTOR"`
 	Debug                   bool              `env:"DEBUG" envDefault:"false"`
 	Pretty                  bool              `env:"PRETTY" envDefault:"false"`
 	OrderBy                 string            `env:"ORDER_BY"`

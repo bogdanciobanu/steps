@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "kafka_delete_consumer_group"
   description: "Delete a consumer group"
   vendor: kafka

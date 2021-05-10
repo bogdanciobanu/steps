@@ -53,8 +53,8 @@ func (k *KubectlStep) BaseCommand(ignoreFields ...IgnoredArgs) ([]string, error)
 	}
 
 	if !inIgnoredArray(IgnoreFieldSelector, ignoreFields) {
-		if k.StepArgs.FieldSelector != "" {
-			args = append(args, "--field-selector", k.StepArgs.FieldSelector)
+		for _, fieldSelector := range k.StepArgs.FieldSelector {
+			args = append(args, "--field-selector", fieldSelector)
 		}
 	}
 

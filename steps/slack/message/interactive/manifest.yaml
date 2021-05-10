@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "slack_send_interactive_message"
   description: "Send a Slack message with an interactive button or selector which you can use its input later in the playbook."
   vendor: slack
@@ -39,19 +40,24 @@ envs:
     required: true
     example: "Are you sure?"
   - name: TIMEOUT
-    description: "The time to wait for the user response (In Golang Duration format), if the timeout expires the default response will be used. default is 10 minutes."
+    description: "The time to wait for the user response (In Golang Duration format), if the timeout expires the default response will be used. Default is 10 minutes and maximum is 25 minuets on the StackPulse cloud runner."
     type: string
     required: false
     example: "2m"
   - name: RESPONSES
-    description: "A list of possible options the user can select and will be returned in the step output as raw string."
+    description: "A list of possible options the user can select and will be returned in the step output as raw string. Can be either comma-seperated list or JSON array. Maximum number of responses is 10000"
     type: string
     required: false
     example: "Yes,No"
+  - name: ALLOW_NONE
+    description: "Allow the user to choose a \"None\" option which will be added automatically to the list of responses. If enabled, it will be also the default response."
+    type: bool
+    required: false
+    default: false
   - name: DEFAULT_RESPONSE
-    description: "The response to use in case of timeout expiration when waiting for the slack user's input (must be one of RESPONSES)."
+    description: "The response to use in case of timeout expiration when waiting for the slack user's input (must be one of RESPONSES). If 'ALLOW_NONE' was enabled, this field will be overridden otherwise it is required."
     type: string
-    required: true
+    required: false
     example: "No"
   - name: SELECTOR_TYPE
     description: "The slack interactive selection element type to use when sending this message, possible options are 'MULTI_SELECT', 'BUTTONS_SELECT' or 'SINGLE_SELECT'."

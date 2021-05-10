@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "echo"
   description: "This step prints the given message to stdout."
   vendor: custom 

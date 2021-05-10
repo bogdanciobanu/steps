@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "data_transformer"
   description: "parse given data using various unix shell utils such as sed, grep, jq, etc."
   vendor: data-transformer

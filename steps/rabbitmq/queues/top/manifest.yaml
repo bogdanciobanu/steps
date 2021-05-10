@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "rabbitmq_top_queues_analyze"
   description: "Get the top RabbitMQ queues by memory, messages, message_bytes and messages_ready keys"
   vendor: rabbitmq
@@ -44,10 +45,10 @@ envs:
 
 outputs:
   - name: max_queues
-    description: "The top queues in the format of: {<key_name>\:[<top_queues_for_this_key>]}"
+    description: "The top queues in the format of: {<key_name>:[<top_queues_for_this_key>]}"
     type: "json"
     example: '{"max_queues":{"memory":{"description":"Top memory used queues","max_queues":[{"QueueName":"task_queue11","Value":285204},{"QueueName":"task_queue3","Value":197628},{"QueueName":"task_queue6","Value":197628},{"QueueName":"task_queue2","Value":197532},{"QueueName":"task_queue5","Value":176836}]},"message_bytes":{"description":"Top messages bytes used queues","max_queues":[{"QueueName":"task_queue_large","Value":11534336},{"QueueName":"task_queue4","Value":528},{"QueueName":"task_queue3","Value":396},{"QueueName":"task_queue2","Value":264},{"QueueName":"task_queue19","Value":237}]},"messages":{"description":"Top most messages queues","max_queues":[{"QueueName":"task_queue19","Value":19},{"QueueName":"task_queue18","Value":18},{"QueueName":"task_queue17","Value":17},{"QueueName":"task_queue16","Value":16},{"QueueName":"task_queue15","Value":15}]},"messages_ready":{"description":"Top queues with unconsumed messages","max_queues":[{"QueueName":"task_queue19","Value":19},{"QueueName":"task_queue18","Value":18},{"QueueName":"task_queue17","Value":17},{"QueueName":"task_queue16","Value":16},{"QueueName":"task_queue15","Value":15}]}}}'
   - name: full_details_queues
-    description: "For each queue listed in the max_queues, the original full data for this queue in the format of: {<queue_name>\:<queue_details>}"
+    description: "For each queue listed in the max_queues, the original full data for this queue in the format of: {<queue_name>:<queue_details>}"
     type: "json"
     example: '{"full_details_queues":{"task_queue11":{"arguments":{},"auto_delete":false,"backing_queue_status":{"avg_ack_egress_rate":0,"avg_ack_ingress_rate":0,"avg_egress_rate":0,"avg_ingress_rate":0,"delta":["delta","undefined",0,0,"undefined"],"len":11,"mode":"default","next_seq_id":16384,"q1":0,"q2":0,"q3":10,"q4":1,"target_ram_count":"infinity"},"consumer_utilisation":null,"consumers":0,"durable":true,"effective_policy_definition":{},"exclusive":false,"exclusive_consumer_tag":null,"garbage_collection":{"fullsweep_after":65535,"max_heap_size":0,"min_bin_vheap_size":46422,"min_heap_size":233,"minor_gcs":35},"head_message_timestamp":null,"memory":285204,"message_bytes":133,"message_bytes_paged_out":0,"message_bytes_persistent":133,"message_bytes_ram":133,"message_bytes_ready":133,"message_bytes_unacknowledged":0,"messages":11,"messages_details":{"rate":0},"messages_paged_out":0,"messages_persistent":11,"messages_ram":11,"messages_ready":11,"messages_ready_details":{"rate":0},"messages_ready_ram":11,"messages_unacknowledged":0,"messages_unacknowledged_details":{"rate":0},"messages_unacknowledged_ram":0,"name":"task_queue11","node":"rabbit@mu-rabbit-rabbitmq-0.mu-rabbit-rabbitmq-headless.rabbit.svc.cluster.local","operator_policy":null,"policy":null,"recoverable_slaves":null,"reductions":87308733,"reductions_details":{"rate":0},"single_active_consumer_tag":null,"state":"running","type":"classic","vhost":"/"}}}'

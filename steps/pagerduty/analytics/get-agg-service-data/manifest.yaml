@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "pagerduty_analytics_get_agg_service_data"
   description: "Get PagerDuty aggregated service data."
   vendor: pagerduty

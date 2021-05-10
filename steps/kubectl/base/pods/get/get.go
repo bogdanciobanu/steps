@@ -1,7 +1,9 @@
 package get
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/stackpulse/steps-sdk-go/log"
 
 	"github.com/stackpulse/steps-sdk-go/filter"
 	"github.com/stackpulse/steps/kubectl/base"
@@ -86,3 +88,19 @@ func (n *GetPods) Parse(output []byte) (string, error) {
 
 	return n.kctl.ParseOutput(output, parsingConfiguration, extraFilters...)
 }
+
+func (n *GetPods) ParseObject(output []byte) (*Pods, error) {
+	parsed, err := n.Parse(output)
+	if err != nil {
+		return nil, err
+	}
+
+	ret := &Pods{}
+	if err := json.Unmarshal([]byte(parsed), ret); err != nil {
+		log.Logln("JSON unmarshaling failed. Original output:\n%s", parsed)
+		return nil, fmt.Errorf("unmarshal json: %w", err)
+	}
+
+	return ret, nil
+}
+

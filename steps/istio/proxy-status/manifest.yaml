@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "istio_proxy_status"
   description: "Run a proxy-status command on your Istio cluster."
   vendor: istio
@@ -12,11 +13,11 @@ envs:
     type: "string"
     required: false
   - name: USE_LOCAL_TOKEN
-    description: "True by default, use local token to authenticate to kubernetes (if running inside Pod on same cluster).Must specify this or KUBECONFIG_CONTENT."
+    description: "True by default, use local token to authenticate to kubernetes (if running inside Pod on same cluster). Must specify this or KUBECONFIG_CONTENT."
     type: "bool"
     required: false
   - name: ISTIO_NAMESPACE
-    description: "Istio system namespace (default\: istio-system)"
+    description: "Istio system namespace (default: istio-system)"
     type: "string"
     required: false
   - name: CONTEXT
@@ -28,7 +29,7 @@ envs:
     type: "string"
     required: false
   - name: POD
-    description: "Specific Pod to query\: [<pod-name[.namespace]>]."
+    description: "Specific Pod to query: [<pod-name[.namespace]>]."
     type: "string"
     required: false
 

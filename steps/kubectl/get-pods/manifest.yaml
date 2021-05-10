@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "kubectl_get_pods"
   description: "Getting kubernetes pods"
   vendor: kubernetes
@@ -56,22 +57,22 @@ envs:
     description: "If set, filter only output lines with field containing the provided value. you can provide more then one key-value pair"
     type: "json"
     required: false
-    example: "{'ip'\:'1.2.3.4', 'name'\:'foo'}"
+    example: "{'ip':'1.2.3.4', 'name':'foo'}"
   - name: FILTER_EQUALS
     description: "If set, filter only output lines with field value equals to the provided value. you can provide more then one key"
     type: "json"
     required: false
-    example: "{'ip'\:'1.2.3.4', 'name'\:'foo'}"
+    example: "{'ip':'1.2.3.4', 'name':'foo'}"
   - name: FILTER_NOT_EQUALS
     description: "If set, filter only output lines with field value not equals the provided value. you can provide more then one key"
     type: "json"
     required: false
-    example: "{'ip'\:'1.2.3.4', 'name'\:'foo'}"
+    example: "{'ip':'1.2.3.4', 'name':'foo'}"
   - name: FILTER_NOT_CONTAINS
     description: "If set, filter only output lines with field value that doesn't contain the provided value. you can provide more then one key"
     type: "json"
     required: false
-    example: "{'ip'\:'1.2.3.4', 'name'\:'foo'}"
+    example: "{'ip':'1.2.3.4', 'name':'foo'}"
 
 integrations:
   - k8s

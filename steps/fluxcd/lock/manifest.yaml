@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "fluxcd_lock"
   description: "Use Flux client to lock or unlock to Kubernetes workload."
   vendor: fluxcd
@@ -42,5 +43,4 @@ outputs:
     description: "Json output contains the operation details."
     type: "json"
     example: '{"User":"test-playbook","Operation":"lock","Namespace":"default","Name":"auth-service"}'
-'
 

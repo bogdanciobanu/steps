@@ -1,24 +1,8 @@
 OUTPUTDIR  :=  out
 MANIFESTDIR := $(OUTPUTDIR)/manifests
-TARGETS := $(shell find steps -name "Dockerfile" | sort)
-MANIFESTS := $(shell find steps -name "*.yaml" -type f -exec sh -c "head -3 {} | grep -q 'kind: Step' && echo {}" \; | sort)
-CONTAINER_REGISTRY ?= us-docker.pkg.dev/stackpulse/public
 MANIFEST_PATH ?= gs://stackpulse-steps/
 VENDORS_PATH ?= gs://stackpulse-public/
-MANIFEST_PARSER ?= gcr.io/stackpulse/step-manifest-parser:prd-21.01.0
-
-
-TAG ?=
-BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
-
-# push latest only for master branch
-LATEST ?= $(subst master,latest,$(filter master,$(BRANCH)))
-DOCKER_TAGS = $(TAG) $(BRANCH) $(LATEST)
-BUILD_ARGS =
-
-directory-name=$(patsubst ./%,%,$(patsubst %/,%,$(dir $(1))))
-remove-step-prefix=$(subst steps/,,$(1))
-rulename=$(subst /,-,$(call remove-step-prefix,$(call directory-name, $(1))))
+MANIFEST_PARSER ?= gcr.io/stackpulse/step-manifest-parser:prd-21.04.1
 
 .DELETE_ON_ERROR:
 # declare-shortcut(source, dest) // declare a phony rule shortcut from src to dst.
@@ -66,22 +50,9 @@ endif
 
 .PHONY: local clean apps gomod all pg publish-manifests-no-deps fmt
 
-# --- Manifest stuff
-# manifest-build-rule(path)
-define declare-manifest-build-rule
-	$(eval $(1)_packname := $(call rulename, $(1)))                                                                            \
-	$(call declare-shortcut,pack-$($(1)_packname),$(MANIFESTDIR)/$($(1)_packname).yml)                                         \
-	$(eval                                                                                                                     \
-		$(MANIFESTDIR)/$($(1)_packname).yml: $(1) ; $$(info === packing $(1))
-			mkdir -p $$(dir $$@);
-			grep -q 'imageName:' $(1) && cp $(1) $$@ || docker run -w /root -v $(CURDIR):/root $(MANIFEST_PARSER) image set $(1) $$@ $(CONTAINER_REGISTRY)/$(call remove-step-prefix,$(call directory-name, $(1)))
-			docker run -w /root -v $(CURDIR):/root $(MANIFEST_PARSER) validate $$@
-	 )
-endef
-
-# create pack-$target, packall
-$(foreach manifest, $(MANIFESTS), $(call declare-manifest-build-rule,$(manifest)))
-packall: $(foreach manifest, $(MANIFESTS),pack-$(call rulename, $(manifest)))
+packall:
+	./scripts/prepare-manifests.py ./steps "$(MANIFESTDIR)"
+	docker run --rm -w /root -v $(CURDIR):/root $(MANIFEST_PARSER) validate "/root/$(MANIFESTDIR)/*"
 
 
 $(call declare-shortcut,indexfile,$(MANIFESTDIR)/indexfile.yml)

@@ -2,6 +2,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "pagerduty_oncalls_list"
   description: "List the on-call entries during a given time range."
   vendor: pagerduty

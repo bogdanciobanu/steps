@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "elastic_cluster_stats"
   description: "Get elastic cluster stats."
   vendor: elastic

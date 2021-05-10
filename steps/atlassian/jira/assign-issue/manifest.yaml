@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "atlassian_jira_assign_issue"
   description: "Assign a user to a Jira issue"
   vendor: jira

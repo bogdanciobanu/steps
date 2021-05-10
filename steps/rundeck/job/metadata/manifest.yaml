@@ -1,6 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
+  version: 1.0.0
   name: "rundeck_job_metadata"
   description: "Get a specific job."
   vendor: rundeck
@@ -55,27 +56,27 @@ outputs:
     description: "Job description"
     type: "string"
     example: "restart server job description"
-   - name: href
+  - name: href
     description: "Job HREF url"
     type: "string"
-    example: "http\://rundeck.server\:4440/api/38/execution/88"
+    example: "http://rundeck.server:4440/api/38/execution/88"
   - name: permalink
     description: "Permanent link to job"
     type: "string"
-    example: "http\://rundeck.server\:4440/project/anvils/execution/show/88"
+    example: "http://rundeck.server:4440/project/anvils/execution/show/88"
   - name: average_duration
     description: "Average duration of the job's executions, in milliseconds."
     type: "int"
     example: 45678
   - name: scheduled
     description: "Whether the job is scheduled to run."
-    type: "boolean"
+    type: "bool"
     example: false
   - name: schedule_enabled
     description: "Whether schedualing is enabled for this job."
-    type: "boolean"
+    type: "bool"
     example: false
   - name: enabled
     description: "Whether executing the job is enabled."
-    type: "boolean"
+    type: "bool"
     example: true
