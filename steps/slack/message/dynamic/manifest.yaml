@@ -25,7 +25,7 @@ envs:
     required: true
     example: "user1@example.com"
   - name: IMAGE_LINK
-    description: "If given, linking an image to the message with this URL. If the value is '-', treating previous step output as image bytes. IMAGE_TEXT must be provided when using this env"
+    description: "If given, link an image to the message with this URL. If the value is '-', treat previous step output as image bytes (both raw bytes and base64 encoded bytes are supported). IMAGE_TEXT must be provided when using this env."
     type: string
     example: "https://website.com/img/my-img.png"
   - name: IMAGE_TEXT
