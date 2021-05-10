@@ -2,19 +2,21 @@ apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
   name: "grafana_get_panel"
-  description: "Get a panel from grafana using a Grafana Image Renderer url. The image will be uploaded to StackPulse's file storage and outputted from the step encoded to base64."
+  description: "Get a panel from grafana using a Grafana Image Renderer url. The image will be uploaded to StackPulse's file storage and outputted from the step encoded to base64. Grafana Image Renderer plugin is required. https://grafana.com/grafana/plugins/grafana-image-renderer."
   vendor: grafana
   type: remediation
   version: 1.0.0
 envs:
   - name: URL
-    description: "Grafana Direct link rendered image URL"
+    description: "Grafana Direct link rendered image URL."
     required: true
     example: "https://play.grafana.org/render/d-solo/000000012/grafana-play-home?orgId=1&from=1620203934175&to=1620207534175&panelId=2&width=1000&height=500&tz=Asia%2FJerusalem"
   - name: API_KEY
-    description: "API key for a particular user (leave unset if unauthenticated)"
+    description: "API key for a particular user (leave unset if unauthenticated)."
     example: "eyJrIjoiT0tTcG1pUlY2RnVKZTFVaDFsNFZXdE9ZWmNrMkZYbk"
-
+  - name: TIME_RANGE
+    description: "Override the time range encoded in the URL with a duration of your choice until now. For example you can get the panel from the last hour by specifying '1h' (m = minutes, h = hours, d = days, M = months, y = years)."
+    example: "1h"
 outputs:
   - name: output
     description: "base64 rendered image"

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"regexp"
 	"time"
 
 	"github.com/stackpulse/steps-sdk-go/env"
@@ -19,8 +20,9 @@ const (
 )
 
 type Args struct {
-	URL     string `env:"URL,required"`
-	API_KEY string `env:"API_KEY", envDefault:""`
+	URL        string `env:"URL,required"`
+	API_KEY    string `env:"API_KEY", envDefault:""`
+	TIME_RANGE string `env:"TIME_RANGE", envDefault:""`
 }
 
 type GrafanaGetPanel struct {
@@ -31,6 +33,13 @@ func (l *GrafanaGetPanel) Init() error {
 	err := env.Parse(&l.args)
 	if err != nil {
 		return err
+	}
+
+	if l.args.TIME_RANGE != "" {
+		regex := regexp.MustCompile(`^\d+([mhdyM])$`)
+		if !regex.MatchString(l.args.TIME_RANGE) {
+			fmt.Errorf("invalid time range provided. supported time range format is <number><m/h/d/M/y>")
+		}
 	}
 
 	return nil
@@ -52,6 +61,12 @@ func (l *GrafanaGetPanel) Run() (int, []byte, error) {
 		request.Header.Add("Authorization", bearer)
 	}
 
+	params := request.URL.Query()
+	if l.args.TIME_RANGE != "" {
+		params.Set("to", "now")
+		params.Set("from", fmt.Sprintf("now-%s", l.args.TIME_RANGE))
+	}
+	request.URL.RawQuery = params.Encode()
 	resp, err := client.Do(request)
 	if err != nil {
 		return step.ExitCodeFailure, nil, fmt.Errorf("get: %w", err)
