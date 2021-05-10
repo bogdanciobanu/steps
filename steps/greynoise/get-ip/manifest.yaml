@@ -47,5 +47,5 @@ outputs:
             "message" : "Success"
         }
 
-integration:
+integrations:
   - greynoise_token

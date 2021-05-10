@@ -102,5 +102,5 @@ outputs:
           }
       }
 
-integration:
+integrations:
   - virustotal_token
