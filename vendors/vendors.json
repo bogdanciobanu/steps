@@ -150,5 +150,17 @@
     {
         "vendor_type": "googlechat",
         "icon": "googlechat.svg"
+    },
+    {
+        "vendor_type": "metabase",
+        "icon": "metabase.svg"
+    },
+    {
+        "vendor_type": "grafana",
+        "icon": "grafana.svg"
+    },
+    {
+        "vendor_type": "bluejeans",
+        "icon": "bluejeans.svg"
     }
 ]
