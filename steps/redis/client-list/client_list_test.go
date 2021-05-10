@@ -10,7 +10,7 @@ import (
 	"github.com/orlangure/gnomock"
 	"github.com/orlangure/gnomock/preset/redis"
 	"github.com/stackpulse/steps-sdk-go/step"
-	"github.com/stackpulse/steps-sdk-go/stesting/container"
+	"github.com/stackpulse/steps-sdk-go/testutil/container"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -55,7 +55,7 @@ func SetupRedis(t *testing.T) ServiceUrls {
 func TestRedisListClientList_Run(t *testing.T) {
 	serviceUrls := SetupRedis(t)
 
-	cases := []container.TestCase{
+	cases := []container.Test{
 		{
 			Name:			"no params",
 			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
@@ -104,9 +104,6 @@ func TestRedisListClientList_Run(t *testing.T) {
 	}
 
 	for _, tc := range cases {
-		t.Run(tc.Name, func(t *testing.T) {
-			t.Parallel()
-			tc.Run(t)
-		})
+		t.Run(tc.Name, tc.Run)
 	}
 }
