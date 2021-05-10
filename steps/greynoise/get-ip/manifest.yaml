@@ -13,10 +13,6 @@ envs:
     type: "string"
     required: true
     example: "8.8.8.8"
-  - name: GN_API_KEY
-    description: "Your GreyNoise API key for using the GreyNoise community API. If not provided you might experience rate limiting from the API."
-    type: "string"
-    required: false
 
 
 outputs:
@@ -50,3 +46,6 @@ outputs:
             "last_seen": "2020-01-01",
             "message" : "Success"
         }
+
+integration:
+  - greynoise_token

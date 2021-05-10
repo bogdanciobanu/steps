@@ -8,10 +8,6 @@ metadata:
   type: triage
 
 envs:
-  - name: VT_API_KEY
-    description: "Your VirusTotal API key."
-    type: "string"
-    required: true
   - name: DOMAIN
     description: "DOMAIN to be analyzed."
     type: "string"
@@ -105,3 +101,6 @@ outputs:
               "type": "analysis"
           }
       }
+
+integration:
+  - virustotal_token
