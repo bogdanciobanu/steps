@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  viewBox="0 0 142 142" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51 (57462) - http://www.bohemiancoding.com/sketch -->
+    <title>bjn-logo-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="-7.46575778%" y1="-14.1253689%" x2="38.5941043%" y2="61.6549896%" id="linearGradient-1">
+            <stop stop-color="#1EE2E1" offset="0%"></stop>
+            <stop stop-color="#006FD2" offset="100%"></stop>
+        </linearGradient>
+        <path d="M0,5.53887105 C0,2.4797008 2.45599019,-4.61691858e-05 5.48029359,-4.61691858e-05 L102.968394,-4.61691858e-05 C105.995438,-4.61691858e-05 108.448687,2.47785403 108.448687,5.53887105 L108.448687,103.882007 C108.448687,106.941177 105.993154,109.420924 102.968394,109.420924 L5.48029359,109.420924 C2.45370597,109.420924 0,106.943024 0,103.882007 L0,5.53887105 Z M117.740101,18.7548005 C116.539513,19.6832628 115.565632,21.6768482 115.565632,23.2082801 L115.565632,86.2130595 C115.565632,87.7440297 116.538145,89.7366917 117.740101,90.6660775 L139.825531,107.739904 C141.026575,108.668366 142,108.182667 142,106.647541 L142,2.77333682 C142,1.24144324 141.027944,0.751588175 139.825531,1.68097388 L117.740101,18.7548005 Z" id="path-2"></path>
+        <linearGradient x1="50%" y1="-18.1336836%" x2="152.960029%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#FFFFFF" stop-opacity="0.404240263" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-5" points="0 109.42097 108.448687 25.6455399 108.448687 109.42097"></polygon>
+        <filter x="-27.7%" y="-25.1%" width="140.6%" height="152.5%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="-8" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.211390399 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <polygon id="path-7" points="0 83.4334898 108.448687 0 108.448687 83.4334898"></polygon>
+        <filter x="-27.7%" y="-25.2%" width="140.6%" height="152.7%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="-8" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.211390399 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <polygon id="path-9" points="89.7493728 35.8435242 118.217153 73.5774461 61.2815923 73.5774461"></polygon>
+        <filter x="-14.9%" y="-22.5%" width="129.9%" height="145.1%" filterUnits="objectBoundingBox" id="filter-10">
+            <feOffset dx="-8" dy="-6" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.135586504 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="bjn-logo-icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Logo-Copy" transform="translate(0.000000, 16.000000)">
+            <path d="M0,5.51760759 C0,2.47020675 2.45599019,0 5.48029359,0 L102.968394,0 C105.995438,0 108.448687,2.46836709 108.448687,5.51760759 L108.448687,103.482392 C108.448687,106.529793 105.993154,109 102.968394,109 L5.48029359,109 C2.45370597,109 0,106.531633 0,103.482392 L0,5.51760759 Z M117.740101,18.682692 C116.539513,19.6075823 115.565632,21.5934979 115.565632,23.119038 L115.565632,85.8814219 C115.565632,87.4065021 116.538145,89.3914979 117.740101,90.317308 L139.825531,107.325447 C141.026575,108.250338 142,107.766506 142,106.237287 L142,2.76271308 C142,1.23671308 141.027944,0.748742616 139.825531,1.67455274 L117.740101,18.682692 Z" id="Fill-1" fill="url(#linearGradient-1)"></path>
+            <g id="Group-23">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Fill-1" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                <path d="M117.740101,18.7548005 C116.539513,19.6832628 115.565632,21.6768482 115.565632,23.2082801 L115.565632,86.2130595 C115.565632,87.7440297 116.538145,89.7366917 117.740101,90.6660775 L139.825531,107.739904 C141.026575,108.668366 142,108.182667 142,106.647541 L142,2.77333682 C142,1.24144324 141.027944,0.751588175 139.825531,1.68097388 L117.740101,18.7548005 Z" id="Path" fill="url(#linearGradient-4)" mask="url(#mask-3)"></path>
+                <g id="Path-7604" opacity="0.265275187" mask="url(#mask-3)">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                </g>
+                <g id="Path-7604-Copy" opacity="0.199102146" mask="url(#mask-3)" transform="translate(54.224344, 41.716745) scale(1, -1) translate(-54.224344, -41.716745) ">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                    <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-7"></use>
+                </g>
+                <g id="Triangle-19" opacity="0" mask="url(#mask-3)" transform="translate(89.749373, 54.710485) rotate(-90.000000) translate(-89.749373, -54.710485) ">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-9"></use>
+                </g>
+            </g>
+            <path d="M74.8080808,54.0956873 L74.1010101,53.5902965 L74.8080808,52.9838275 C75.3131313,52.5795148 75.8181818,52.074124 76.2222222,51.6698113 C80.3636364,47.6266846 82.4848485,42.8760108 82.4848485,37.6199461 C82.4848485,33.8800539 81.4747475,30.2412399 79.5555556,27.0067385 C77.6363636,23.7722372 75.010101,21.245283 71.7777778,19.5269542 C68.5454545,17.9097035 64.4040404,17 59.4545455,17 L24,17 L24,92 L60.0606061,92 C65.4141414,92 69.7575758,91.0902965 73.0909091,89.2708895 C76.4242424,87.4514825 79.0505051,84.9245283 81.0707071,81.5889488 C82.989899,78.3544474 84,74.8167116 84,70.9757412 C83.8989899,63.7991914 80.8686869,58.0377358 74.8080808,54.0956873 L74.8080808,54.0956873 Z M36.1212121,27.5121294 L59.5555556,27.5121294 C62.8888889,27.5121294 65.5151515,28.5229111 67.7373737,30.4433962 C69.8585859,32.3638814 70.969697,34.7897574 70.969697,37.9231806 C70.969697,40.8544474 69.959596,43.2803235 67.8383838,45.3018868 C65.7171717,47.222372 63.0909091,48.2331536 59.7575758,48.2331536 L36.1212121,48.2331536 L36.1212121,27.5121294 Z M68.8484848,77.7479784 C66.6262626,79.7695418 63.5959596,80.6792453 59.7575758,80.6792453 L36.1212121,80.6792453 L36.1212121,58.8463612 L59.959596,58.8463612 C62.5858586,58.8463612 64.7070707,59.2506739 66.3232323,60.0592992 C70.2626263,61.9797844 72.1818182,65.2142857 72.1818182,69.6617251 C72.1818182,73.0983827 71.0707071,75.7264151 68.8484848,77.7479784 L68.8484848,77.7479784 Z" id="Fill-5" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>
