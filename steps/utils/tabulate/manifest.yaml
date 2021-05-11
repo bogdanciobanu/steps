@@ -3,7 +3,7 @@ kind: Step
 metadata:
   version: 1.0.0
   name: "tabulate"
-  description: "Generate ASCII table from given input"
+  description: "Generate ASCII table from given input."
   vendor: custom
   type: custom
 
