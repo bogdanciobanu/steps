@@ -1,42 +1,19 @@
 package main
 
 import (
-	"fmt"
-	"runtime"
 	"strconv"
-	"strings"
 	"testing"
 
 	"github.com/orlangure/gnomock"
 	"github.com/orlangure/gnomock/preset/redis"
 	"github.com/stackpulse/steps-sdk-go/step"
 	"github.com/stackpulse/steps-sdk-go/testutil/container"
+	"github.com/stackpulse/steps-sdk-go/testutil/container/matcher"
 	"github.com/stretchr/testify/assert"
 )
 
-type ServiceUrls struct {
-	Schema      string
-	Host        string
-	Port        string
-	HostAndPort string
-	FullUrl     string
-}
 
-func NewServiceUrls(schema, host, port string) ServiceUrls {
-	if runtime.GOOS == "darwin" {
-		host = strings.Replace(host, "127.0.0.1", "docker.for.mac.localhost", 1)
-	}
-
-	return ServiceUrls{
-		Schema:      schema,
-		Host:        host,
-		Port:        port,
-		HostAndPort: fmt.Sprintf("%s:%s", host, port),
-		FullUrl:     fmt.Sprintf("%s%s:%s", schema, host, port),
-	}
-}
-
-func SetupRedis(t *testing.T) ServiceUrls {
+func SetupRedis(t *testing.T) container.ServiceUrls {
 	vs := make(map[string]interface{})
 
 	vs["string"] = "foo"
@@ -49,7 +26,7 @@ func SetupRedis(t *testing.T) ServiceUrls {
 		assert.Fail(t, "failed to create redis redisContainer: %w", err)
 	}
 
-	return NewServiceUrls("redis://", redisContainer.Host, strconv.Itoa(redisContainer.DefaultPort()))
+	return container.NewServiceUrls("redis://", redisContainer.Host, strconv.Itoa(redisContainer.DefaultPort()))
 }
 
 func TestRedisGet_Run(t *testing.T) {
@@ -63,7 +40,7 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError: 		"failed init step arguments, env: required environment variable",
-			WantOutput: 	"",
+			WantOutput: 	matcher.Text(""),
 		},
 		{
 			Name:			"failed to connect redis - invalid dns",
@@ -72,7 +49,7 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"no such host",
-			WantOutput:		"",
+			WantOutput:		matcher.Text(""),
 		},
 		{
 			Name:			"failed to connect redis - invalid ip",
@@ -81,34 +58,34 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"connection refused",
-			WantOutput:		"",
+			WantOutput:		matcher.Text(""),
 		},
 		{
 			Name:			"key not found",
 			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
-			Envs:			map[string]string{"KEY": "not-exist", "REDIS_URL": serviceUrls.FullUrl},
+			Envs:			map[string]string{"KEY": "not-exist", "REDIS_URL": serviceUrls.FullURL},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"key not found",
-			WantOutput:		"",
+			WantOutput:		matcher.Text(""),
 		},
 		{
 			Name:			"numerical key - found",
 			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
-			Envs:			map[string]string{"KEY": "number", "REDIS_URL": serviceUrls.FullUrl},
+			Envs:			map[string]string{"KEY": "number", "REDIS_URL": serviceUrls.FullURL},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeOK,
 			WantError:		"",
-			WantOutput:		"42",
+			WantOutput:		matcher.Text("42"),
 		},
 		{
 			Name:			"numerical key - string",
 			Image:			"us-docker.pkg.dev/stackpulse/public/redis/get",
-			Envs:			map[string]string{"KEY": "string", "REDIS_URL": serviceUrls.FullUrl},
+			Envs:			map[string]string{"KEY": "string", "REDIS_URL": serviceUrls.FullURL},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeOK,
 			WantError:		"",
-			WantOutput:		"foo",
+			WantOutput:		matcher.Text("foo"),
 		},
 	}
 
