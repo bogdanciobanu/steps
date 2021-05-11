@@ -1,54 +1,33 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
-  version: 1.0.0
+  version: 1.0.1
   name: "slack_send_interactive_message"
   description: "Send a Slack message with an interactive button or selector which you can use its input later in the playbook."
   vendor: slack
   type: notification
 
 envs:
-  - name: SP_REDIRECT_URL
-    description: "URL of the environment you use for execution redirection."
-    type: string
-    default: "{{ .metadata.executionUrl }}"
-    example: "{{ .metadata.executionUrl }}"
-    required: true
-  - name: HEADER_MESSAGE
-    description: "A line displayed as the message header."
-    type: string
-    required: false
-    example: "Check out this message!"
   - name: RECIPIENTS
     description: "Channel name (with # prefix) or user emails to send the message to."
     type: string
     required: true
     example: "user1@example.com"
-  - name: IMAGE_URL
-    description: "If given, linking an image to the message with this URL."
-    type: string
-    required: false
-    example: "https://website.com/img/my-img.png"
-  - name: IMAGE_TEXT
-    description: "Image text to attach to the image file. Ignored if IMAGE_URL is empty."
-    type: string
-    required: false
-    example: "Check out this image!"
   - name: QUESTION
     description: "A text representing the question this interactive message asks the user."
     type: string
     required: true
     example: "Are you sure?"
+  - name: RESPONSES
+    description: "A list of possible options the user can select and will be returned in the step output as raw string. Can be either comma-seperated list or JSON array. Maximum number of responses is 10000"
+    type: string
+    required: true
+    example: "Yes,No"
   - name: TIMEOUT
     description: "The time to wait for the user response (In Golang Duration format), if the timeout expires the default response will be used. Default is 10 minutes and maximum is 25 minuets on the StackPulse cloud runner."
     type: string
     required: false
     example: "2m"
-  - name: RESPONSES
-    description: "A list of possible options the user can select and will be returned in the step output as raw string. Can be either comma-seperated list or JSON array. Maximum number of responses is 10000"
-    type: string
-    required: false
-    example: "Yes,No"
   - name: ALLOW_NONE
     description: "Allow the user to choose a \"None\" option which will be added automatically to the list of responses. If enabled, it will be also the default response."
     type: bool
@@ -64,6 +43,27 @@ envs:
     type: string
     required: true
     example: "BUTTONS_SELECT"
+  - name: HEADER_MESSAGE
+    description: "A line displayed as the message header."
+    type: string
+    required: false
+    example: "Check out this message!"
+  - name: IMAGE_URL
+    description: "If given, linking an image to the message with this URL."
+    type: string
+    required: false
+    example: "https://website.com/img/my-img.png"
+  - name: IMAGE_TEXT
+    description: "Image text to attach to the image file. Ignored if IMAGE_URL is empty."
+    type: string
+    required: false
+    example: "Check out this image!"
+  - name: SP_REDIRECT_URL
+    description: "URL of the environment you use for execution redirection."
+    type: string
+    default: "{{ .metadata.executionUrl }}"
+    example: "{{ .metadata.executionUrl }}"
+    required: true
 
 outputs:
   - name: selected_responses

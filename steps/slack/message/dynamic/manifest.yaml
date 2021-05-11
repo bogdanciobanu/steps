@@ -1,7 +1,7 @@
 apiVersion: stackpulse.io/v1
 kind: Step
 metadata:
-  version: 1.0.0
+  version: 1.0.1
   name: "slack_send_dynamic_message"
   description: "Send a simple text message, or snippet, to a Slack channel or user."
   vendor: slack
@@ -13,12 +13,6 @@ envs:
     type: string
     required: true
     example: "lorem ipsum dolor sit amet"
-  - name: SP_REDIRECT_URL
-    description: "URL of the environment you use for execution redirection."
-    type: string
-    default: "{{ .metadata.executionUrl }}"
-    example: "{{ .metadata.executionUrl }}"
-    required: true
   - name: RECIPIENTS
     description: "Channel name (with # prefix) or user emails to send the message to."
     type: string
