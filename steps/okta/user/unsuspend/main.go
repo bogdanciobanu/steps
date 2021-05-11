@@ -49,9 +49,9 @@ func (s *UserUnsuspend) Run() (int, []byte, error) {
 	_, resp, err := oktaClient.User.ActivateUser(s.UserId, nil)
 	if err != nil {
 		if resp.StatusCode == http.StatusNotFound {
-			return step.ExitCodeOK, []byte(stepResultInvalidID), nil
+			return step.ExitCodeFailure, []byte(stepResultInvalidID), fmt.Errorf("invalid user id: user id doesn't exist")
 		} else if resp.StatusCode == http.StatusForbidden {
-			return step.ExitCodeOK, []byte(stepResultInvalidState), nil
+			return step.ExitCodeFailure, []byte(stepResultInvalidState), fmt.Errorf("invalid user state: user is not in the SUSPENDED state")
 		}
 		return step.ExitCodeFailure, nil, err
 	}

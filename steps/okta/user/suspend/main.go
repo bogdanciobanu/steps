@@ -60,10 +60,10 @@ func (s *UserSuspend) Run() (int, []byte, error) {
 			output.Result = stepResultInvalidID
 			outputBytes, err := json.Marshal(output)
 			if err != nil {
-				return step.ExitCodeFailure, nil, err
+				return step.ExitCodeFailure, nil, fmt.Errorf("failed to build output: %w", err)
 			}
 			//ok but result is invalid ID
-			return step.ExitCodeOK, outputBytes, nil
+			return step.ExitCodeFailure, outputBytes, fmt.Errorf("invalid user id: either user id doesn't exist or user is not in ACTIVE state")
 		}
 		//not ok, unknown error
 		return step.ExitCodeFailure, nil, err
@@ -73,7 +73,7 @@ func (s *UserSuspend) Run() (int, []byte, error) {
 	output.Result = stepResultInvalidID
 	outputBytes, err := json.Marshal(output)
 	if err != nil {
-		return step.ExitCodeFailure, nil, err
+		return step.ExitCodeFailure, nil, fmt.Errorf("failed to build output: %w", err)
 	}
 	return step.ExitCodeOK, outputBytes, nil
 }
