@@ -1,35 +1,15 @@
 package main
 
 import (
-	"strconv"
 	"testing"
 
-	"github.com/orlangure/gnomock"
-	"github.com/orlangure/gnomock/preset/redis"
 	"github.com/stackpulse/steps-sdk-go/step"
 	"github.com/stackpulse/steps-sdk-go/testutil/container"
-	"github.com/stretchr/testify/assert"
+	"github.com/stackpulse/steps/redis/base/redistest"
 )
 
-
-func SetupRedis(t *testing.T) container.ServiceUrls {
-	vs := make(map[string]interface{})
-
-	vs["string"] = "foo"
-	vs["number"] = 42
-	vs["boolean"] = true
-
-	p := redis.Preset(redis.WithValues(vs))
-	redisContainer, err := gnomock.Start(p)
-	if err != nil {
-		assert.Fail(t, "failed to create redis redisContainer: %w", err)
-	}
-
-	return container.NewServiceUrls("redis://", redisContainer.Host, strconv.Itoa(redisContainer.DefaultPort()))
-}
-
 func TestRedisListClientList_Run(t *testing.T) {
-	serviceUrls := SetupRedis(t)
+	serviceURL := redistest.SetupRedis(t)
 
 	cases := []container.Test{
 		{
@@ -38,7 +18,7 @@ func TestRedisListClientList_Run(t *testing.T) {
 			Envs:			map[string]string{},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
-			WantError: 		"failed init step arguments, env: required environment variable",
+			WantError: 		"invalid arguments",
 			WantOutput: 	nil,
 		},
 		{
@@ -62,7 +42,7 @@ func TestRedisListClientList_Run(t *testing.T) {
 		{
 			Name:			"negative limit",
 			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
-			Envs:			map[string]string{"LIMIT": "-1", "REDIS_URL": serviceUrls.FullURL},
+			Envs:			map[string]string{"LIMIT": "-2", "REDIS_URL": serviceURL.FullURL},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"LIMIT cannot be a negative number",
@@ -71,7 +51,7 @@ func TestRedisListClientList_Run(t *testing.T) {
 		{
 			Name:			"list one client",
 			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
-			Envs:			map[string]string{"REDIS_URL": serviceUrls.FullURL},
+			Envs:			map[string]string{"REDIS_URL": serviceURL.FullURL},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeOK,
 			WantError:		"",

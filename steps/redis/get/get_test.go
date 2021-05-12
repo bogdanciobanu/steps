@@ -1,36 +1,16 @@
 package main
 
 import (
-	"strconv"
 	"testing"
 
-	"github.com/orlangure/gnomock"
-	"github.com/orlangure/gnomock/preset/redis"
 	"github.com/stackpulse/steps-sdk-go/step"
 	"github.com/stackpulse/steps-sdk-go/testutil/container"
 	"github.com/stackpulse/steps-sdk-go/testutil/container/matcher"
-	"github.com/stretchr/testify/assert"
+	"github.com/stackpulse/steps/redis/base/redistest"
 )
 
-
-func SetupRedis(t *testing.T) container.ServiceUrls {
-	vs := make(map[string]interface{})
-
-	vs["string"] = "foo"
-	vs["number"] = 42
-	vs["boolean"] = true
-
-	p := redis.Preset(redis.WithValues(vs))
-	redisContainer, err := gnomock.Start(p)
-	if err != nil {
-		assert.Fail(t, "failed to create redis redisContainer: %w", err)
-	}
-
-	return container.NewServiceUrls("redis://", redisContainer.Host, strconv.Itoa(redisContainer.DefaultPort()))
-}
-
 func TestRedisGet_Run(t *testing.T) {
-	serviceUrls := SetupRedis(t)
+	serviceUrls := redistest.SetupRedis(t)
 
 	cases := []container.Test{
 		{
@@ -76,7 +56,7 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeOK,
 			WantError:		"",
-			WantOutput:		matcher.Text("42"),
+			WantOutput:		matcher.StepOutputTextEqual("42"),
 		},
 		{
 			Name:			"numerical key - string",
@@ -85,7 +65,7 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeOK,
 			WantError:		"",
-			WantOutput:		matcher.Text("foo"),
+			WantOutput:		matcher.StepOutputTextEqual("foo"),
 		},
 	}
 
