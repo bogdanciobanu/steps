@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"runtime"
 	"strconv"
-	"strings"
 	"testing"
 
 	"github.com/orlangure/gnomock"
@@ -14,29 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type ServiceUrls struct {
-	Schema      string
-	Host        string
-	Port        string
-	HostAndPort string
-	FullUrl     string
-}
 
-func NewServiceUrls(schema, host, port string) ServiceUrls {
-	if runtime.GOOS == "darwin" {
-		host = strings.Replace(host, "127.0.0.1", "docker.for.mac.localhost", 1)
-	}
-
-	return ServiceUrls{
-		Schema:      schema,
-		Host:        host,
-		Port:        port,
-		HostAndPort: fmt.Sprintf("%s:%s", host, port),
-		FullUrl:     fmt.Sprintf("%s%s:%s", schema, host, port),
-	}
-}
-
-func SetupRedis(t *testing.T) ServiceUrls {
+func SetupRedis(t *testing.T) container.ServiceUrls {
 	vs := make(map[string]interface{})
 
 	vs["string"] = "foo"
@@ -49,7 +25,7 @@ func SetupRedis(t *testing.T) ServiceUrls {
 		assert.Fail(t, "failed to create redis redisContainer: %w", err)
 	}
 
-	return NewServiceUrls("redis://", redisContainer.Host, strconv.Itoa(redisContainer.DefaultPort()))
+	return container.NewServiceUrls("redis://", redisContainer.Host, strconv.Itoa(redisContainer.DefaultPort()))
 }
 
 func TestRedisListClientList_Run(t *testing.T) {
@@ -63,7 +39,7 @@ func TestRedisListClientList_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError: 		"failed init step arguments, env: required environment variable",
-			WantOutput: 	"",
+			WantOutput: 	nil,
 		},
 		{
 			Name:			"failed to connect redis - invalid dns",
@@ -72,7 +48,7 @@ func TestRedisListClientList_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"no such host",
-			WantOutput:		"",
+			WantOutput:		nil,
 		},
 		{
 			Name:			"failed to connect redis - invalid ip",
@@ -81,25 +57,25 @@ func TestRedisListClientList_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"connection refused",
-			WantOutput:		"",
+			WantOutput:		nil,
 		},
 		{
 			Name:			"negative limit",
 			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
-			Envs:			map[string]string{"LIMIT": "-1", "REDIS_URL": serviceUrls.FullUrl},
+			Envs:			map[string]string{"LIMIT": "-1", "REDIS_URL": serviceUrls.FullURL},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"LIMIT cannot be a negative number",
-			WantOutput:		"",
+			WantOutput:		nil,
 		},
 		{
 			Name:			"list one client",
 			Image:			"us-docker.pkg.dev/stackpulse/public/redis/client-list",
-			Envs:			map[string]string{"REDIS_URL": serviceUrls.FullUrl},
+			Envs:			map[string]string{"REDIS_URL": serviceUrls.FullURL},
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeOK,
 			WantError:		"",
-			WantOutput:		"",
+			WantOutput:		nil,
 		},
 	}
 

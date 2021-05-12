@@ -40,7 +40,7 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError: 		"failed init step arguments, env: required environment variable",
-			WantOutput: 	matcher.Text(""),
+			WantOutput: 	nil,
 		},
 		{
 			Name:			"failed to connect redis - invalid dns",
@@ -49,7 +49,7 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"no such host",
-			WantOutput:		matcher.Text(""),
+			WantOutput:		nil,
 		},
 		{
 			Name:			"failed to connect redis - invalid ip",
@@ -58,7 +58,7 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"connection refused",
-			WantOutput:		matcher.Text(""),
+			WantOutput:		nil,
 		},
 		{
 			Name:			"key not found",
@@ -67,7 +67,7 @@ func TestRedisGet_Run(t *testing.T) {
 			Args: 			[]string{},
 			WantExitCode: 	step.ExitCodeFailure,
 			WantError:		"key not found",
-			WantOutput:		matcher.Text(""),
+			WantOutput:		nil,
 		},
 		{
 			Name:			"numerical key - found",
