@@ -40,6 +40,10 @@ envs:
     description: "The message header introducing the message text"
     type: string
     example: "StackPulse Message"
+  - name: THREAD_TS
+    description: "The parent message ts to enable creating or replying to a thread."
+    type: string
+    example: "1610384739.003300"
 
 outputs:
   - name: message_recipient

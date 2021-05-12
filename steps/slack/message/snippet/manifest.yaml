@@ -36,6 +36,10 @@ envs:
     description: "The message text introducing the file in specified channels"
     type: string
     example: "Check out this file!"
+  - name: THREAD_TS
+    description: "The parent message ts to enable creating or replying to a thread."
+    type: string
+    example: "1610384739.003300"
 
 outputs:
   - name: message_recipient
