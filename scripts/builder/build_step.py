@@ -7,6 +7,7 @@
 import helpers
 import sys
 import os
+import logging
 
 
 # Step family is the top level directory containing steps of the same vendor
@@ -25,13 +26,32 @@ def main():
     dev_tag = helpers.get_current_branch()
     dev_image_tag = helpers.docker_image_tag(image_repo, dev_tag)
 
+    test_results_path = os.path.join(os.getenv("TEST_OUTPUT_DIR", "./"), "_".join(split_step_path))
+
+    # check code formatting
+    if not helpers.check_go_linting():
+        return 1
+
+    # run unit tests
+    if not helpers.run_unit_tests(test_results_path + ".unit.junit.xml"):
+        return 1
+
+    # check if there is a docker file in this directory
+    if not os.path.isfile("Dockerfile"):
+        logging.info("No Dockerfile in this step, skipping build")
+        return 0
+
     if not helpers.docker_build(
             dev_image_tag,
-        "Dockerfile",
-        step_family_path(split_step_path),
-        ["--build-arg", "BASE_BRANCH=latest",
-         "--build-arg", "CURRENT_BRANCH=" + helpers.get_current_branch(),
-         "--build-arg", "STEP_BASEPATH=" + "/".join(split_step_path[1:])]):
+            "Dockerfile",
+            step_family_path(split_step_path),
+            ["--build-arg", "BASE_BRANCH=latest",
+             "--build-arg", "CURRENT_BRANCH=" + helpers.get_current_branch(),
+             "--build-arg", "STEP_BASEPATH=" + "/".join(split_step_path[1:])]):
+        return 1
+
+    # run integration tests
+    if not helpers.run_integration_tests(dev_image_tag, test_results_path + ".integration.junit.xml"):
         return 1
 
     for tag in helpers.get_step_image_tags("./"):

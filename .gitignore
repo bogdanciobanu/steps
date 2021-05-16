@@ -8,3 +8,4 @@ venv
 *.container.id
 *.pyc
 .vscode/
+**/*.junit.xml

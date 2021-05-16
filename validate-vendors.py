@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import glob
 import json
@@ -48,7 +48,7 @@ def validate_svg():
     files = glob.glob("./vendors" + "/*.svg")
 
     for f in files:
-        print("Validating: " + f, end=" ")
+        print(f"Validating: {f}", end=" ")
 
         svg_parser = SVGParser()
         with open(f, "r+") as svgfile:

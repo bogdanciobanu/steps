@@ -35,13 +35,13 @@ envs:
     type: "string"
     example: "age"
   - name: ORDER_DESC
-    description: "Wheter sorting is in descending order, if ORDER_BY is specified."
+    description: "Whether sorting is in descending order, if ORDER_BY is specified."
     type: "bool"
     default: "false"
     example: "true"
 
 outputs:
   - name: output
-    description: "Array of a Redis instance current clients and detailes about them."
+    description: "Array of a Redis instance current clients and details about them."
     type: "json"
     example: '[{"addr":"127.0.0.1:51708","age":"0","argv-mem":"10","cmd":"client","db":"0","events":"r","fd":"8","flags":"N","id":"110","idle":"0","multi":"-1","name":"","obl":"0","oll":"0","omem":"0","psub":"0","qbuf":"26","qbuf-free":"32742","sub":"0","tot-mem":"54298","user":"default"}]'

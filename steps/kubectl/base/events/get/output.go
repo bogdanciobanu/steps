@@ -1,8 +1,9 @@
 package get
 
 import (
-	base2 "github.com/stackpulse/steps/kubectl/base"
 	"time"
+
+	base2 "github.com/stackpulse/steps/kubectl/base"
 )
 
 var parsingConfiguration = map[string]*base2.JsonParseConfig{

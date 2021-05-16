@@ -1,3 +1,3 @@
 
 name = "pagerduty/pagerduty-get-oncall"
-includes = ["{{ .root }}/baur-includes/step.toml#build-step"]
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step"]

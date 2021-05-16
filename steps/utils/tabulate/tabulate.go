@@ -261,7 +261,7 @@ func (t *Tabulate) unmarshalMap(input string) ([]map[string]string, bool) {
 	return nil, false
 }
 
-func convertArray(arr [][]interface{}) [][]string{
+func convertArray(arr [][]interface{}) [][]string {
 	ret := make([][]string, len(arr))
 	for i, vals := range arr {
 		currentArr := make([]string, len(vals))

@@ -13,8 +13,12 @@ define declare-shortcut
 	 )
 endef
 
+go-tools:
+	@echo "===> Installing Go tools"
+	@./scripts/go_tools.sh
+
 fmt:
-	@gofmt -l -w steps
+	@goimports -l -w steps
 
 apps:
 	@./scripts/baur_apps.py
@@ -48,7 +52,7 @@ else
 	baur run --skip-upload ${BUILD_ARGS}
 endif
 
-.PHONY: local clean apps gomod all pg publish-manifests-no-deps fmt
+.PHONY: local clean apps gomod all pg publish-manifests-no-deps fmt go-tools
 
 packall:
 	./scripts/prepare-manifests.py ./steps "$(MANIFESTDIR)"

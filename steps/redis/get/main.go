@@ -53,7 +53,9 @@ func (l *RedisGet) Run() (exitCode int, output []byte, err error) {
 		return step.ExitCodeFailure, nil, fmt.Errorf("failed getting key value: validate key is valid: %w", err)
 	}
 
-	gc.Set(val, "output")
+	if gc, err = gc.Set(val, "output"); err != nil {
+		return step.ExitCodeFailure, []byte(val), err
+	}
 
 	return step.ExitCodeOK, gc.Bytes(), nil
 }

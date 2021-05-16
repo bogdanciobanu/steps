@@ -3,6 +3,7 @@ package get
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/stackpulse/steps-sdk-go/log"
 
 	"github.com/stackpulse/steps-sdk-go/filter"
@@ -103,4 +104,3 @@ func (n *GetPods) ParseObject(output []byte) (*Pods, error) {
 
 	return ret, nil
 }
-

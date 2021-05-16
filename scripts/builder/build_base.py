@@ -5,6 +5,7 @@
 
 import helpers
 import sys
+import os
 
 STEP_PATH = "base"
 
@@ -15,7 +16,17 @@ def main():
     dev_tag = helpers.get_current_branch()
     dev_image_tag = helpers.docker_image_tag(image_repo, dev_tag)
 
+    test_results_path = os.path.join(os.getenv("TEST_OUTPUT_DIR", "./"), STEP_PATH)
+
+    # run unit tests
+    if not helpers.run_unit_tests(test_results_path + ".unit.junit.xml"):
+        return 1
+
     if not helpers.docker_build(dev_image_tag):
+        return 1
+
+    # run integration tests
+    if not helpers.run_integration_tests(dev_image_tag, test_results_path + ".integration.junit.xml"):
         return 1
 
     for tag in helpers.get_step_image_tags("./"):

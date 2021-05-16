@@ -4,7 +4,7 @@ import subprocess
 import yaml
 import logging
 import sys
-
+import glob
 
 
 # Will initialize logger for given step.
@@ -24,22 +24,29 @@ def init_logger(step_name=None):
     )
 
 
-def run_command(args):
+# Run command and return true/false depending on exit code
+def run_command(args, env={}):
+    output, result = run_command_with_output(args, env)
+    return result
+
+
+# Run command and return stdout
+def run_command_with_output(args, env={}):
     cmdline = " ".join(args)
     logging.info(f"> Running: {cmdline}")
     output = None
-    result = False
     try:
-        output = subprocess.check_output(args, stderr=subprocess.STDOUT)
-    except Exception as e:
-        output = e.output
+        output = subprocess.check_output(args, env=dict(os.environ, **env))
+    except subprocess.CalledProcessError as e:
+        if e.output:
+            logging.error(str(e.output, 'utf-8'))
         logging.exception("Failed running command")
-    else:
-        result = True
+        return None, False
 
-    if output and len(output) != 0:
-        logging.info(str(output, 'utf-8'))
-    return result
+    if len(output) != 0:
+        output = str(output, 'utf-8')
+        logging.info(output)
+    return output, True
 
 
 # Get current branch using git cli tool
@@ -141,3 +148,46 @@ def docker_push(image):
 
     logging.info(f"Pushing docker image {image}")
     return run_command(["docker", "push", image])
+
+
+# Run unit tests
+def run_unit_tests(test_results_path):
+    unit_tests = [x for x in glob.glob("./**_test.go") if not "_integration" in x]
+    if len(unit_tests) == 0:
+        logging.info("No unit tests found for step")
+        return True
+
+    logging.info(f"Running unit tests, output={test_results_path}")
+    return run_command(["gotestsum", "-f", "standard-verbose", "--junitfile", test_results_path])
+
+
+# Run integration tests; Integration tests run on docker image and have a build tag `integration`
+def run_integration_tests(image, test_results_path):
+    if len(glob.glob("./**integration_test.go")) == 0:
+        logging.info("No integration tests found for step")
+        return True
+
+    logging.info(f"Running tests for {image}, output={test_results_path}")
+    return run_command(["gotestsum", "-f", "standard-verbose", "--junitfile", test_results_path, "--", "--tags=integration"], env={"STEP_IMAGE": image})
+
+
+# Check go code linting
+def check_go_linting():
+    go_files = glob.glob("./**.go")
+    if len(go_files) == 0:
+        logging.info("No Go source files found")
+        return True
+
+    logging.info("Checking go-fmt")
+    imports_result, result = run_command_with_output(["goimports", "-l", *go_files])
+    if imports_result is None:
+        return True
+
+    if len(imports_result) > 0 or not result:
+        logging.error(f"The following go files are not formatted: {imports_result}")
+        return False
+
+    if os.getenv("GOLANGCI") == "true":
+        logging.info("[Not enforced] Running golangci-lint")
+        run_command(["golangci-lint", "run", f"--path-prefix={os.getcwd()}"])
+    return True

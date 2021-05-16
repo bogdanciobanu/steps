@@ -11,7 +11,7 @@ DOCKERFILE = "Dockerfile"
 
 TOML_TEMPLATE = """
 name = "{step_name}"
-includes = ["{{{{ .root }}}}/baur-includes/step.toml#build-step"]
+includes = ["{{{{ .Root }}}}/baur-includes/step.toml#build-step"]
 """
 APP_FILE = ".app.toml"
 

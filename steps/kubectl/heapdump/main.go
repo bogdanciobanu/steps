@@ -17,11 +17,11 @@ import (
 type memoryDump struct {
 	base.Args
 	PodInfo
-	Storage        storage.Storage
-	Runtime        string `env:"RUNTIME,required"`
+	Storage storage.Storage
+	Runtime string `env:"RUNTIME,required"`
 
-	kubectl        *base.KubectlStep
-	dumper         Dumper
+	kubectl *base.KubectlStep
+	dumper  Dumper
 }
 
 type PodInfo struct {

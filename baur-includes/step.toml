@@ -10,7 +10,7 @@
     include_id = "build-step"
 
     # Command to execute.
-    command = ["{{ .root }}/scripts/builder/build_step.py"]
+    command = ["{{ .Root }}/scripts/builder/build_step.py"]
 
     # Inputs that are tracked to detect if a task needs to be run.
     [Task.Input]
@@ -46,7 +46,7 @@
     include_id = "build-step-level-2"
 
     # Command to execute.
-    command = ["{{ .root }}/scripts/builder/build_step.py"]
+    command = ["{{ .Root }}/scripts/builder/build_step.py"]
 
     # Inputs that are tracked to detect if a task needs to be run.
     [Task.Input]
@@ -85,7 +85,7 @@
     include_id = "build-step-level-3"
 
     # Command to execute.
-    command = ["{{ .root }}/scripts/builder/build_step.py"]
+    command = ["{{ .Root }}/scripts/builder/build_step.py"]
 
     # Inputs that are tracked to detect if a task needs to be run.
     [Task.Input]
@@ -106,3 +106,27 @@
 
         # File containing the image ID of the produced image (docker build --iidfile).
         idfile = ".container.id"
+
+#
+# Builds base step which has no external dependencies and no docker file
+# Mainly used to run unit tests
+#   ./step-family/base
+[[Task]]
+    # Task name
+    name = "build-step-base-no-docker"
+    include_id = "build-step-base-no-docker"
+
+    # Command to execute.
+    command = ["{{ .Root }}/scripts/builder/build_step.py"]
+
+    # Inputs that are tracked to detect if a task needs to be run.
+    [Task.Input]
+
+        [[Task.Input.Files]]
+        paths = ["**"]
+
+        # Do not fail if a Path resolves to 0 files.
+        optional = true
+
+        # Only resolve to files that are part of the Git repository.
+        git_tracked_only = true

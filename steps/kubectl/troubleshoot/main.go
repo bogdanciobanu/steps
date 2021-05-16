@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/stackpulse/steps-sdk-go/log"
-	"github.com/stackpulse/steps-sdk-go/upload"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/stackpulse/steps-sdk-go/log"
+	"github.com/stackpulse/steps-sdk-go/upload"
 
 	"github.com/olekukonko/tablewriter"
 	"github.com/stackpulse/steps-sdk-go/step"

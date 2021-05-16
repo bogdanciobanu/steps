@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/stackpulse/steps/kubectl/base"
 	"strings"
+
+	"github.com/stackpulse/steps/kubectl/base"
 )
 
 type Dumper interface {

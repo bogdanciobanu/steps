@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestUnmarshalMap(t *testing.T) {
@@ -251,11 +252,11 @@ func TestUnmarshalArray(t *testing.T) {
 			inputHeaders:  []string{"key1", "key2"},
 		},
 		{
-			name:          "String JSON not specifying headers",
-			input:         `[["val1", "val2"],["val3", "val4"]]`,
-			ok:            true,
-			inputHeaders:  []string{"by_keys"},
-			err: fmt.Errorf("can't build headers when arrays list provided, please specify headers explicitly"),
+			name:         "String JSON not specifying headers",
+			input:        `[["val1", "val2"],["val3", "val4"]]`,
+			ok:           true,
+			inputHeaders: []string{"by_keys"},
+			err:          fmt.Errorf("can't build headers when arrays list provided, please specify headers explicitly"),
 		},
 		{
 			name:          "String JSON show indexes",

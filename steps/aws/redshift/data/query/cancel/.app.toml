@@ -1,3 +1,3 @@
 
 name = "aws/redshift/data/query/cancel"
-includes = ["{{ .root }}/baur-includes/step.toml#build-step-level-3"]
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step-level-3"]

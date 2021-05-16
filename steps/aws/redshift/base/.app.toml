@@ -1,0 +1,3 @@
+
+name = "aws/redshift/base"
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step-base-no-docker"]

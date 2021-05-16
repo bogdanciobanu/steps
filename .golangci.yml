@@ -1,0 +1,89 @@
+run:
+  skip-files:
+    - "_test.go"
+    - ".pb.go"
+    - ".pb.gw.go"
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - unused
+    - path: \.pb\.go
+      linters:
+        - unused
+    - path: \.pb\.gw\.go
+      linters:
+        - unused
+linters-settings:
+  dupl:
+    threshold: 100
+  funlen:
+    lines: 100
+    statements: 50
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - performance
+      - style
+    settings:
+      hugeparam:
+        sizeThreshold: 512
+  golint:
+    min-confidence: 0
+  govet:
+    check-shadowing: true
+  maligned:
+    suggest-new: true
+  misspell:
+    locale: US
+  gosimple:
+    go: "1.16"
+  staticcheck:
+    go: "1.16"
+  stylecheck:
+    go: "1.16"
+  depguard:
+    list-type: blacklist
+    include-go-root: false
+    packages:
+      - github.com/sirupsen/logrus
+      - github.com/docker/distribution/uuid
+      - github.com/satori/go.uuid
+    packages-with-error-message:
+      - github.com/docker/distribution/uuid: "uuid is allowed only by github.com/google/uuid"
+      - github.com/satori/go.uuid: "uuid is allowed only by github.com/google/uuid"
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - dogsled
+    - dupl
+    - errcheck
+    - funlen
+    - goconst
+    - gocritic
+    - gocyclo
+    - gofmt
+    - goimports
+    - golint
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - rowserrcheck
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - varcheck
+    - whitespace
+    - depguard

@@ -1,3 +1,3 @@
 
 name = "curl/curl-request"
-includes = ["{{ .root }}/baur-includes/step.toml#build-step"]
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step"]

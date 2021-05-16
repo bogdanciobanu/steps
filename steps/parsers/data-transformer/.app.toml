@@ -1,2 +1,2 @@
 name = "parsers/data-transformer"
-includes = ["{{ .root }}/baur-includes/step.toml#build-step"]
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step"]
