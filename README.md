@@ -16,7 +16,7 @@ Just like any other container, steps can receive input in the form of run argume
 
 ### Build tool
 
-The build tool used by the steps repository is called baur. You must install it on your machine from [here](https://github.com/simplesurance/baur/releases).  The currently supported version we use is *1.0-rc2*.
+The build tool used by the steps repository is called baur. You must install it on your machine from [here](https://github.com/simplesurance/baur/releases).  The currently supported version we use is *2.0*.
 
 Baur requires PostgreSQL to operate. After building a step once, the step's file hashes will be stored into postgres. Subsequent attempts to build the step will not do anything unless one of the files the step depends on are changed. 
 
@@ -62,6 +62,15 @@ Any change to `base` will result all sibling steps to be rebuilt. A change to a 
 3. Create a your step under `./steps/family/`, it should contain a `Dockerfile`.
 4. Once your step contains `Dockerfile` run `make apps` to generate baur application file for the newly created steps, the file created will be called `.app.toml`
 5. After running the command you should be able to run `baur run family/my-new-step` to build it.
+
+### Adding integration tests to steps
+Integration tests are meant to test the step container works as expected. Their purpose is to use the step docker image externally and validate its operation.
+1. Integration tests should be implemented in the same directory of the step. 
+2. The test file should be called `<step>_integration_test.go`.
+3. Integration tests should have a build tag `// +build integration`.
+4. Integration tests run as a part of the build process and require the step image to be build in order to operate. In order to 
+execute them run `baur run <step_name>`. Once the step is built the tests will be executed.
+5. It is possible to run integration tests locally by passing the step image name using the `STEP_IMAGE` environment variable.   
 
 ## Contributing
 

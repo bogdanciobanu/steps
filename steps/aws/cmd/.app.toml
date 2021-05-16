@@ -1,0 +1,3 @@
+
+name = "aws/cmd"
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step"]

@@ -21,7 +21,7 @@ fmt:
 	@goimports -l -w steps
 
 apps:
-	@./scripts/baur_apps.py
+	@./scripts/baur_apps.py --init
 
 gomod:
 	@./scripts/go_mod.py
@@ -36,7 +36,11 @@ clean:
 	@./scripts/local_postgres.sh down
 	rm -rf $(OUTPUTDIR)
 
-all:
+.PHONY: check-apps
+check-apps:
+	@./scripts/baur_apps.py --check
+
+all: check-apps
 
 ifeq ("$(FORCE_REBUILD)","true")
 	@echo "Forcing rebuild"

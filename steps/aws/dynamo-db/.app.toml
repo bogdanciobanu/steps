@@ -1,0 +1,3 @@
+
+name = "aws/dynamo-db"
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step"]

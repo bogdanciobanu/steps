@@ -1,0 +1,3 @@
+
+name = "curl/curl-writeout"
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step"]
