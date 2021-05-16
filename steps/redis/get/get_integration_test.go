@@ -54,7 +54,7 @@ func TestRedisGet_Run(t *testing.T) {
 		},
 		{
 			Name:         "numerical key - found",
-			Image:        "us-docker.pkg.dev/stackpulse/public/redis/get",
+			Image:        testImage,
 			Envs:         map[string]string{"KEY": "number", "REDIS_URL": serviceUrls.FullURL},
 			Args:         []string{},
 			WantExitCode: step.ExitCodeOK,
@@ -63,7 +63,7 @@ func TestRedisGet_Run(t *testing.T) {
 		},
 		{
 			Name:         "numerical key - string",
-			Image:        "us-docker.pkg.dev/stackpulse/public/redis/get",
+			Image:        testImage,
 			Envs:         map[string]string{"KEY": "string", "REDIS_URL": serviceUrls.FullURL},
 			Args:         []string{},
 			WantExitCode: step.ExitCodeOK,
