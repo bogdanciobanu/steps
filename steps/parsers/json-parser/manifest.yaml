@@ -1,0 +1,18 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  version: 1.0.0
+  name: "json_parser"
+  description: "Parse given raw data as JSON and output it directly to the context, can allow easy use of output from generic docker images as steps (ie. aws-cli). "
+  vendor: custom
+  type: custom
+
+envs:
+  - name: INPUT
+    description: "Input to parse. If not provided, the parser will use the previous step output as input."
+    type: string
+
+outputs:
+  - name: output
+    description: "The output will contain the parsed input json."
+    type: json
