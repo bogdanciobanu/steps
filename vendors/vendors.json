@@ -158,5 +158,17 @@
     {
         "vendor_type": "grafana",
         "icon": "grafana.svg"
+    },
+    {
+        "vendor_type": "okta",
+        "icon": "okta.svg"
+    },
+    {
+        "vendor_type": "virustotal",
+        "icon": "virustotal.svg"
+    },
+    {
+        "vendor_type": "greynoise",
+        "icon": "greynoise.svg"
     }
 ]

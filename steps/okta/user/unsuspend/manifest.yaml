@@ -1,0 +1,25 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  version: 1.0.0
+  name: "okta_unsuspend_user"
+  description: "Unsuspend a user and return them to the ACTIVE state."
+  vendor: okta
+  type: remediation
+
+envs:
+  - name: OKTA_API_TOKEN
+    description: "An Okta API token that is used to authenticate requests to Okta APIs."
+    type: "string"
+    required: true
+  - name: OKTA_DOMAIN
+    description: "Your Okta organizational domain."
+    type: "string"
+    required: true
+    example: "example.okta.com"
+  - name: USER_ID
+    description: "The ID of the user to unsuspend. This operation can only be performed on users with a SUSPENDED status."
+    type: "string"
+    required: true
+
+outputs:

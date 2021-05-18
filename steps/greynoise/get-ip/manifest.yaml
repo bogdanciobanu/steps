@@ -1,0 +1,51 @@
+apiVersion: stackpulse.io/v1
+kind: Step
+metadata:
+  version: 1.0.0
+  name: "greynoise_get_ip"
+  description: "Retrieve information about an IP address."
+  vendor: greynoise
+  type: triage
+
+envs:
+  - name: IP
+    description: "IP address."
+    type: "string"
+    required: true
+    example: "8.8.8.8"
+
+
+outputs:
+  - name: name
+    description: "Name of Organization that Owns the IP."
+    type: "string"
+    example: "Cloudflare"
+  - name: noise
+    description: "If true, this IP has been observed scanning the internet in the last 90 days."
+    type: "bool"
+    example: "true"
+  - name: riot
+    description: "If true, this IP was found in the RIOT project dataset."
+    type: "bool"
+    example: "true"
+  - name: classification
+    description: "The GreyNoise classification for this IP."
+    type: "string"
+    example: "malicious"
+  - name: api_object
+    description: "Object containing an the response from the VirusTotal API."
+    type: "json"
+    example: |
+        {
+            "ip": "1.1.1.1",
+            "noise": false,
+            "riot": true,
+            "classification": "benign",
+            "name": "Cloudflare",
+            "link": "https://viz.greynoise.io/riot/1.1.1.1",
+            "last_seen": "2020-01-01",
+            "message" : "Success"
+        }
+
+integrations:
+  - greynoise_token

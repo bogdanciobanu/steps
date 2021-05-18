@@ -1,0 +1,3 @@
+
+name = "virustotal/get-domain"
+includes = ["{{ .Root }}/baur-includes/step.toml#build-step"]

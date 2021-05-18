@@ -11,7 +11,7 @@ postgresql_url = "postgres://postgres:baur@localhost:15432/baur?sslmode=disable&
 [Discover]
 
 # Directories in which applications (.app.toml files) are discovered
-application_dirs = ["."]
+application_dirs = ["./base", "./steps"]
 
 # Descend at most search_depth levels to find application configs
 search_depth = 6
