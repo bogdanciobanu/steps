@@ -5,4 +5,5 @@ CONTAINER_REGISTRY = "us-docker.pkg.dev/stackpulse/public"
 CONTAINER_ID_FILE = ".container.id"
 MANIFEST_SUFFIX = ".yml"
 MANIFEST_FILENAME = "manifest.yaml"
+APP_TOML = ".app.toml"
 VERSION_FILENAMES = ["VERSION", "VERSION.step"]

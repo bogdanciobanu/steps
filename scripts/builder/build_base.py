@@ -3,40 +3,15 @@
     This script is used to build ./base image
 """
 
-import helpers
 import sys
-import os
-
-STEP_PATH = "base"
+import build
 
 
 def main():
-    helpers.init_logger(STEP_PATH)
-    image_repo = helpers.get_step_docker_repository(STEP_PATH)
-    dev_tag = helpers.get_current_branch()
-    dev_image_tag = helpers.docker_image_tag(image_repo, dev_tag)
-
-    test_results_path = os.path.join(os.getenv("TEST_OUTPUT_DIR", "./"), STEP_PATH)
-
-    # run unit tests
-    if not helpers.run_unit_tests(test_results_path + ".unit.junit.xml"):
+    if not build.build(base_image_build=True):
         return 1
 
-    if not helpers.docker_build(dev_image_tag):
-        return 1
-
-    # run integration tests
-    if not helpers.run_integration_tests(dev_image_tag, test_results_path + ".integration.junit.xml"):
-        return 1
-
-    for tag in helpers.get_step_image_tags("./"):
-        image_tag = helpers.docker_image_tag(image_repo, tag)
-
-        if not helpers.docker_tag(image_repo, dev_tag, tag):
-            return 1
-
-        if not helpers.docker_push(image_tag):
-            return 1
+    return 0
 
 
 if __name__ == "__main__":
