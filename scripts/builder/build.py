@@ -62,7 +62,7 @@ def step_family_path() -> str:
 
 # Validate current directory is a valid baur application
 def assert_step_cwd():
-    assert (os.path.isfile(constants.APP_TOML), f"must in directory with {constants.APP_TOML} file")
+    assert os.path.isfile(constants.APP_TOML), f"must in directory with {constants.APP_TOML} file"
 
 
 # Run integration tests; Integration tests run on docker image and have a build tag `integration`
@@ -108,7 +108,7 @@ def check_go_linting():
     if len(imports_result) > 0 or not result:
         raise LintException(f"The following go files are not formatted: {imports_result}")
 
-    logging.info("[Not enforced] Running golangci-lint")
+    logging.info("Running golangci-lint")
     if not helpers.run_command(["golangci-lint", "run", f"--path-prefix={os.getcwd()}"]):
         raise LintException("golangci-lint failed")
 

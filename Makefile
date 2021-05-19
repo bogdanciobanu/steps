@@ -2,7 +2,7 @@ OUTPUTDIR  :=  out
 MANIFESTDIR := $(OUTPUTDIR)/manifests
 MANIFEST_PATH ?= gs://stackpulse-steps/
 VENDORS_PATH ?= gs://stackpulse-public/
-MANIFEST_PARSER ?= gcr.io/stackpulse/step-manifest-parser:prd-21.04.1
+MANIFEST_PARSER ?= gcr.io/stackpulse/step-manifest-parser:prd-21.05.1
 
 .DELETE_ON_ERROR:
 # declare-shortcut(source, dest) // declare a phony rule shortcut from src to dst.
@@ -59,7 +59,7 @@ endif
 .PHONY: local clean apps gomod all pg publish-manifests-no-deps fmt go-tools
 
 packall:
-	./scripts/prepare-manifests.py ./steps "$(MANIFESTDIR)"
+	./scripts/prepare_manifests.py ./steps "$(MANIFESTDIR)"
 	docker run --rm -w /root -v $(CURDIR):/root $(MANIFEST_PARSER) validate "/root/$(MANIFESTDIR)/*"
 
 

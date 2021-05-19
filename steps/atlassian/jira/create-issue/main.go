@@ -28,7 +28,7 @@ type jiraCreateIssue struct {
 }
 
 type output struct {
-	Id  string `json:"id"`
+	ID  string `json:"id"`
 	Key string `json:"key"`
 	step.Outputs
 }
@@ -46,6 +46,7 @@ func (j *jiraCreateIssue) Init() error {
 	return nil
 }
 
+// nolint unnamedResult
 func (j *jiraCreateIssue) Run() (int, []byte, error) {
 	oauthClient, url, err := base.GetOauthConnectionDetails(j.token, j.args.SiteName)
 	if err != nil {
@@ -107,7 +108,7 @@ func (j *jiraCreateIssue) Run() (int, []byte, error) {
 
 	jsonOutput, err := json.Marshal(&output{
 		Outputs: step.Outputs{Object: createdIssue},
-		Id:      createdIssue.ID,
+		ID:      createdIssue.ID,
 		Key:     createdIssue.Key,
 	})
 	if err != nil {

@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+if [ -z "$TARGET_DIR" ]; then
+TARGET_DIR=$(go env GOPATH)/bin
+fi
+
 if ! hash goimports 2>/dev/null; then
   echo "Installing goimports..."
   go get -u golang.org/x/tools/...

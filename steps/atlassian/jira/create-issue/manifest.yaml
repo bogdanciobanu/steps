@@ -46,7 +46,6 @@ envs:
     type: "string"
     required: true
     example: "myemail@mycompany.io"
-    example: "frontend-developer@stackpulse.io"
 
 integrations:
   - jira

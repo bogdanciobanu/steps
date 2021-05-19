@@ -39,6 +39,7 @@ commands:
       - run:
           name: Install go tools
           command: |
+            export TARGET_DIR=/home/circleci/.go_workspace/bin
             make go-tools
       - save_cache:
           key: << parameters.cache-key >>
@@ -89,7 +90,6 @@ jobs:
       FORCE_REBUILD: << pipeline.parameters.force-rebuild >>
       LOG_OUTPUT_DIR: << parameters.build-log-path >>
       TEST_OUTPUT_DIR: << parameters.tests-path >>
-      GOLANGCI: false # keep it disabled for now
     steps:
       - checkout
       - install-python-deps
@@ -114,7 +114,7 @@ jobs:
       - run:
           name: Build steps
           command: |
-            export PATH=/home/circleci/bin:$PATH
+            export PATH=/home/circleci/.go_workspace/bin:/home/circleci/bin:$PATH
             export BAUR_POSTGRESQL_URL="$BAUR_V2_POSTGRESQL_URL"
             mkdir -p $LOG_OUTPUT_DIR
             mkdir -p $TEST_OUTPUT_DIR

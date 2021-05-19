@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 import glob
-import yaml
+import ruamel.yaml
 import traceback
 import sys
 import os.path
@@ -21,14 +21,16 @@ def get_manifest_filename(path):
 
 
 def patch_image_name(manifest_path, image_name):
-    f = open(manifest_path)
+
     try:
-        y = yaml.safe_load(f)
+        yaml = ruamel.yaml.YAML()
+        with open(manifest_path) as f:
+            y = yaml.load(f)
     except:
         traceback.print_exc()
         raise Exception(f"[!] Error parsing yaml {manifest_path}")
 
-    if not 'metadata' in y:
+    if 'metadata' not in y:
         raise Exception(f"[!] No metadata object found in yaml {manifest_path}")
 
     if 'imageName' in y['metadata']:
@@ -37,7 +39,8 @@ def patch_image_name(manifest_path, image_name):
 
     print(f"> Setting image name to: {image_name}")
     y['metadata']['imageName'] = image_name
-    yaml.dump(y, open(manifest_path, "w"), default_flow_style=False)
+    with open(manifest_path, "w") as f:
+        yaml.dump(y, f)
     print("[+] Saved")
 
 
@@ -45,7 +48,7 @@ def main():
     try:
         prog_name, manifest_dir, output_dir = sys.argv
     except:
-        print("Usage: prepare-manifests.py <manifest_dir> <output_dir>")
+        print("Usage: prepare_manifests.py <manifest_dir> <output_dir>")
         return 1
 
     try:
